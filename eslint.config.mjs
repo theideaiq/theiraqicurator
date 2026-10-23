@@ -1,61 +1,16 @@
-import js from "@eslint/js";
-import nextPlugin from "@next/eslint-plugin-next";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 
-export default [
-  js.configs.recommended,
+const config = [
+  ...nextVitals,
+  ...nextTs,
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-    plugins: {
-      "@typescript-eslint": tsPlugin,
-      "@next/next": nextPlugin,
-    },
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-      globals: {
-        React: "readonly",
-        console: "readonly",
-        process: "readonly",
-        window: "readonly",
-        document: "readonly",
-        fetch: "readonly",
-        setTimeout: "readonly",
-        clearTimeout: "readonly",
-        setInterval: "readonly",
-        clearInterval: "readonly",
-        __dirname: "readonly",
-        URL: "readonly",
-        AbortController: "readonly",
-        Event: "readonly",
-        Promise: "readonly",
-      }
-    },
     rules: {
-      ...tsPlugin.configs.recommended.rules,
-      ...nextPlugin.configs.recommended.rules,
-      ...nextPlugin.configs["core-web-vitals"].rules,
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-empty-object-type": "off",
-      "no-undef": "off"
+      // Artwork images come from Supabase storage at arbitrary URLs.
+      '@next/next/no-img-element': 'off',
     },
   },
-  {
-    ignores: [
-      "**/.next/**",
-      "**/node_modules/**",
-      "**/dist/**",
-      "apps/web/.next/**",
-      "apps/dashboard/.next/**"
-    ],
-  }
+  { ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'] },
 ];
+
+export default config;

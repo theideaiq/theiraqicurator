@@ -45,3 +45,5 @@ target/
 pkg/
 Cargo.lock
 .turbo/
+
+!.env.example
