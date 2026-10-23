@@ -24,10 +24,13 @@ manifesto live in `src/lib/content.ts`; the timetable falls back to the list the
 
 ## Brand
 
-The taped-samoon mark lives in `src/components/Logo.tsx` (vector, drawn from the Instagram
-avatar). Ready-made files for print and social are in `public/brand/`:
-`samoon.svg/.png` (transparent), `samoon-badge.svg/.png` (round sticker) and
-`lockup.svg/.png` (mark + wordmark).
+The mark is the original taped-samoon photograph, cut out onto a transparent background.
+Files in `public/brand/`:
+
+- `samoon.png`: full-resolution transparent cut-out (print, social, partners' posters)
+- `samoon.webp`: the lightweight copy the site loads
+- `samoon-badge.png`: the round sticker version (avatars)
+- `lockup.png`: the mark above the "The Iraqi Curator" wordmark
 
 ## Run it
 

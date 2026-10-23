@@ -36,6 +36,23 @@ alter table public.curations add column if not exists language text not null def
 alter table public.curations add column if not exists updated_at timestamptz not null default now();
 alter table public.artworks add column if not exists language text not null default 'both';
 
+-- An earlier default stored the quotes literally ('both' with quote marks); normalise it.
+alter table public.curations alter column language set default 'both';
+alter table public.artworks alter column language set default 'both';
+update public.curations set language = 'both' where language is null or language not in ('en', 'ar', 'both');
+update public.artworks set language = 'both' where language is null or language not in ('en', 'ar', 'both');
+
+-- The first dashboard let *any* signed-in user write. Policies are OR-ed, so
+-- those must go for the staff allowlist below to mean anything.
+drop policy if exists "Allow authenticated users full access to artworks" on public.artworks;
+drop policy if exists "Allow public read access on artworks" on public.artworks;
+drop policy if exists "Admins have full access to curations" on public.curations;
+drop policy if exists "Public can read published curations" on public.curations;
+drop policy if exists "Authenticated users can delete" on storage.objects;
+drop policy if exists "Authenticated users can update" on storage.objects;
+drop policy if exists "Authenticated users can upload" on storage.objects;
+drop policy if exists "Public Access" on storage.objects;
+
 -- ---------------------------------------------------------------------------
 -- Timetable (exhibitions, workshops, talks)
 -- ---------------------------------------------------------------------------
