@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Iraqi Curator — القيّم العراقي
 
-## Getting Started
+*The art class we didn't take at school / درس الفنية اللي ما اخذناه بالمدرسة*
 
-First, run the development server:
+A single Next.js app: the bilingual public site **and** the staff room (`/admin`) where the
+curator manages everything. One repo, one deploy. Built and run in partnership with
+[The IDEA](https://theideaiq.com).
+
+## What's inside
+
+| Path | What it is |
+| --- | --- |
+| `/` · `/ar` | Home: hero, timetable, curriculum, pop quiz, seal room, contact form |
+| `/timetable` | Exhibitions & workshops, with calendar (.ics) export |
+| `/museum` | 3D room + index of the collection, with audio guides |
+| `/blog` | Curations (essays) |
+| `/syllabus` | Index of Iraqi artists |
+| `/manifesto` | House rules + colophon |
+| `/admin` | Staff room: curations, museum, timetable, partners, inbox (sign-in required) |
+
+Content lives in Supabase (`curations`, `artworks`, `events`, `partners`, `notes`). The syllabus, quiz and
+manifesto live in `src/lib/content.ts`; the timetable falls back to the list there until the
+`events` table has rows (partners likewise fall back to the list there).
+
+## Brand
+
+The mark is the original taped-samoon photograph, cut out onto a transparent background.
+Files in `public/brand/`:
+
+- `samoon.png`: full-resolution transparent cut-out (print, social, partners' posters)
+- `samoon.webp`: the lightweight copy the site loads
+- `samoon-badge.png`: the round sticker version (avatars)
+- `lockup.png`: the mark above the "The Iraqi Curator" wordmark
+
+## Run it
 
 ```bash
-pnpm dev
-# or
-yarn dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local   # fill in your Supabase URL + anon key
+pnpm dev                     # http://localhost:3000, staff room at /admin
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Supabase setup (once)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Run `supabase/migrations/20261024000000_platform.sql` in the Supabase SQL editor. It adds
+   the `events`, `partners`, `notes` and `staff` tables, row-level security, and the `museum-assets`
+   storage bucket, and seeds the timetable and partners.
+2. Create a user for each staff member (Authentication → Users → Add user), then add them to
+   the allowlist:
+   ```sql
+   insert into public.staff (email, name) values ('ali@example.com', 'Ali');
+   ```
+3. Turn off public sign-ups (Authentication → Providers → Email) — only invited staff need accounts.
+4. For "email me a link" sign-in, add `https://<your-domain>/admin/auth/callback` to
+   Authentication → URL Configuration → Redirect URLs.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel, from the repo root (Framework preset: Next.js, no root directory). Set
+`NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
