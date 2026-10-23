@@ -1,43 +1,74 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
+import { SOCIAL } from '@/lib/content';
+import { Marquee } from '@/components/ui/Marquee';
 
 export function Footer() {
+  const t = useTranslations('Footer');
+  const nav = useTranslations('Navigation');
+  const locale = useLocale();
+
   return (
-    <footer className="bg-[#111111] text-[#f8f8f8] py-12 md:py-24 px-6 md:px-12 overflow-hidden rounded-t-3xl md:rounded-t-[4rem]">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 gap-8">
-        <div className="max-w-md">
-          <p className="text-xs uppercase tracking-widest text-zinc-500 mb-4">Preserving the Present</p>
-          <p className="text-sm md:text-base leading-relaxed text-zinc-400">
-            The Iraqi Curator is a digital preservation initiative focused on contemporary art, essays, and audiovisual history from Baghdad to the world.
-          </p>
+    <footer className="relative bg-ink text-paper overflow-hidden">
+      <Marquee
+        className="bg-saffron text-ink border-y-2 border-ink py-2"
+        items={[t('tagline'), 'بغداد', 'Baghdad', 'القيّم العراقي', 'The Iraqi Curator']}
+      />
+
+      <div className="grid gap-12 md:grid-cols-12 px-6 md:px-10 pt-16 pb-10">
+        <div className="md:col-span-5">
+          <p className="font-display text-4xl md:text-5xl leading-none italic">{t('tagline')}</p>
+          <p className="mt-6 text-sm leading-relaxed text-paper/70 max-w-md">{t('about')}</p>
         </div>
-        
-        <div className="flex flex-col gap-2 text-xs font-bold uppercase tracking-[0.2em] text-right">
-          <a href="mailto:contact@theideaiq.com" className="hover:text-amber-500 transition-colors">Contact</a>
-          <a href="https://theideaiq.com" target="_blank" rel="noreferrer" className="hover:text-amber-500 transition-colors">The IDEA Group</a>
+
+        <div className="md:col-span-3 md:col-start-7 font-mono text-xs uppercase">
+          <p className="text-paper/50 mb-4">{t('contact')}</p>
+          <a href={`mailto:${SOCIAL.email}`} dir="ltr" className="rtl:text-right block normal-case text-base hover:text-saffron break-all">
+            {SOCIAL.email}
+          </a>
+          <p className="text-paper/50 mt-8 mb-4">{t('follow')}</p>
+          <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" dir="ltr" className="rtl:text-right block normal-case text-base hover:text-rose">
+            Instagram {SOCIAL.instagramHandle} ↗
+          </a>
         </div>
+
+        <ul className="md:col-span-3 font-mono text-xs uppercase space-y-2">
+          {(['timetable', 'museum', 'blog', 'syllabus'] as const).map((key) => (
+            <li key={key}>
+              <Link href={key === 'blog' ? '/blog' : `/${key}`} className="hover:text-saffron">
+                → {nav(key)}
+              </Link>
+            </li>
+          ))}
+          <li className="pt-4">
+            <a href="#main" className="hover:text-saffron">{t('top')}</a>
+          </li>
+        </ul>
       </div>
 
-      <div className="border-t border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-[10px] uppercase tracking-widest text-zinc-500">
-          &copy; {new Date().getFullYear()} The Iraqi Curator. All Rights Reserved.
+      <div className="px-6 md:px-10 pb-6 flex flex-col md:flex-row justify-between gap-2 font-mono text-[10px] uppercase text-paper/50">
+        <p>
+          &copy; {new Date().getFullYear()} {locale === 'ar' ? 'القيّم العراقي' : 'The Iraqi Curator'} — {t('rights')}
         </p>
-        <img src="/logo-samoon.png" alt="Samoon" className="w-8 h-8 opacity-20 grayscale" />
+        <p>{t('location')} · 33.3152°N 44.3661°E</p>
+        <a href="https://theideaiq.com" target="_blank" rel="noreferrer" className="hover:text-paper">
+          {t('built')} ↗
+        </a>
       </div>
 
-      {/* Massive Typography */}
-      <motion.div 
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, margin: "100px" }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="mt-12 md:mt-24 w-full flex justify-center"
+      <motion.p
+        aria-hidden
+        initial={{ y: '40%' }}
+        whileInView={{ y: '0%' }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="font-display text-[26vw] leading-[0.75] text-center text-paper/10 select-none -mb-[4vw]"
       >
-        <h2 className="text-[14vw] leading-[0.8] font-black uppercase tracking-tighter text-zinc-800/50 select-none text-center">
-          Baghdad
-        </h2>
-      </motion.div>
+        {locale === 'ar' ? 'بغداد' : 'Baghdad'}
+      </motion.p>
     </footer>
   );
 }

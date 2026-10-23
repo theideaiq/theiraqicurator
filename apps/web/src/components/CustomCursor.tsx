@@ -1,57 +1,64 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
+/**
+ * A soft follower that sits on top of the native cursor (which stays visible
+ * for accessibility). Elements can set `data-cursor="label"` to make it
+ * swell up and show a word.
+ */
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.4 });
+  const [label, setLabel] = useState<string | null>(null);
+  const [interactive, setInteractive] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    // 1. Detect if it's a mobile/touch device
-    if (window.matchMedia("(pointer: coarse)").matches) {
-      setIsTouchDevice(true);
-      return; // Stop running cursor logic on mobile
-    }
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || calm) return;
+    setEnabled(true);
 
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const move = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
     };
-
-    const handleMouseOver = (e: MouseEvent) => {
+    const over = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName.toLowerCase() === 'a' || target.tagName.toLowerCase() === 'button' || target.closest('a') || target.closest('button')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+      const labelled = target.closest<HTMLElement>('[data-cursor]');
+      setLabel(labelled?.dataset.cursor ?? null);
+      setInteractive(!!target.closest('a, button, input, textarea, select, [role="button"]'));
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseover', handleMouseOver);
-
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseover', over);
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseover', over);
     };
-  }, []);
+  }, [x, y]);
 
-  // 2. Do not render anything if it's a touch screen
-  if (isTouchDevice) return null;
+  if (!enabled) return null;
+
+  const size = label ? 88 : interactive ? 44 : 14;
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-6 h-6 rounded-full border-2 border-amber-600 pointer-events-none z-[9999] mix-blend-difference flex items-center justify-center hidden md:flex"
-      animate={{
-        x: mousePosition.x - 12,
-        y: mousePosition.y - 12,
-        scale: isHovering ? 2.5 : 1,
-        backgroundColor: isHovering ? 'rgba(217, 119, 6, 0.2)' : 'transparent',
-      }}
-      transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.5 }}
+      aria-hidden
+      className="pointer-events-none fixed top-0 left-0 z-[9999] flex items-center justify-center rounded-full bg-saffron text-ink mix-blend-multiply"
+      style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
+      animate={{ width: size, height: size, opacity: interactive || label ? 0.9 : 0.6 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
     >
-      <div className={`w-1 h-1 bg-amber-600 rounded-full transition-opacity duration-300 ${isHovering ? 'opacity-0' : 'opacity-100'}`} />
+      {label && (
+        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-center leading-tight px-2">
+          {label}
+        </span>
+      )}
     </motion.div>
   );
 }
