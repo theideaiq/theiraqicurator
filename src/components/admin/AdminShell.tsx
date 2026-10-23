@@ -57,7 +57,9 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
         <ThemeToggle labels={{ day: 'Day mode', night: 'Night mode' }} />
         <SignOut className="font-mono text-xs uppercase underline underline-offset-4 hover:text-brick" />
       </div>
-      <p className="font-mono text-[10px] uppercase text-ink/50 break-all">{email}</p>
+      <Link href="/admin/account" className="font-mono text-[10px] uppercase text-ink/50 break-all hover:text-lapis">
+        {email} · password
+      </Link>
       <p className="font-mono text-[10px] uppercase text-ink/40">Platform by The IDEA</p>
     </div>
   );
