@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -8,33 +8,72 @@ import { createClient } from '@/lib/supabase/client';
 import { Logo } from '@/components/Logo';
 import { Button, ErrorNote, Field, inputClass } from '@/components/admin/ui';
 
+// Supabase puts implicit-flow results in the URL hash. Grab it once, as the
+// module loads, before the effect below clears it from the address bar.
+const initialHash = typeof window === 'undefined' ? '' : window.location.hash.slice(1);
+const hashError = new URLSearchParams(initialHash).get('error_description')?.replace(/\+/g, ' ') ?? null;
+const noop = () => () => {};
+
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const next = params.get('next')?.startsWith('/admin') ? params.get('next')! : '/admin';
-  const [mode, setMode] = useState<'password' | 'link'>('password');
+  const [mode, setMode] = useState<'password' | 'link' | 'reset'>('password');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(params.get('error') ? 'That sign-in link expired. Ask for a fresh one.' : null);
+  const fromHash = useSyncExternalStore(noop, () => hashError, () => null);
+  const [error, setError] = useState<string | null>(params.get('error'));
   const [linkSent, setLinkSent] = useState(false);
+
+  // If Supabase fell back to the implicit flow, the session (or its error)
+  // arrives in the URL hash rather than via the callback route.
+  useEffect(() => {
+    const hash = new URLSearchParams(initialHash);
+    if (!hash.size || !window.location.hash) return;
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    const access_token = hash.get('access_token');
+    const refresh_token = hash.get('refresh_token');
+    if (access_token && refresh_token) {
+      createClient()
+        .auth.setSession({ access_token, refresh_token })
+        .then(({ error }) => {
+          if (error) setError(error.message);
+          else {
+            router.replace(hash.get('type') === 'recovery' ? '/admin/account?reset=1' : next);
+            router.refresh();
+          }
+        });
+    }
+  }, [next, router]);
 
   const configured = !!process.env.NEXT_PUBLIC_SUPABASE_URL;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
-    setError(null);
+    setError('');
     const supabase = createClient();
     if (mode === 'password') {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
-        setError(error.message);
+        setError(
+          /invalid login credentials/i.test(error.message)
+            ? 'Wrong email or password. Never set one? Use “Forgot password” to create it, or sign in with an email link.'
+            : error.message
+        );
         setBusy(false);
         return;
       }
       router.replace(next);
       router.refresh();
+    } else if (mode === 'reset') {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/admin/auth/callback?next=/admin/account`,
+      });
+      if (error) setError(error.message);
+      else setLinkSent(true);
+      setBusy(false);
     } else {
       const { error } = await supabase.auth.signInWithOtp({
         email,
@@ -62,7 +101,7 @@ function LoginForm() {
               setMode(m);
               setLinkSent(false);
             }}
-            className={`flex-1 py-2 ${mode === m ? 'bg-ink text-paper' : 'hover:bg-saffron'}`}
+            className={`flex-1 py-2 ${mode === m || (m === 'password' && mode === 'reset') ? 'bg-ink text-paper' : 'hover:bg-saffron'}`}
           >
             {m === 'password' ? 'Password' : 'Email me a link'}
           </button>
@@ -70,7 +109,7 @@ function LoginForm() {
       </div>
 
       {!configured && <ErrorNote message="Supabase isn't configured: set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY." />}
-      <ErrorNote message={error} />
+      <ErrorNote message={error ?? fromHash} />
 
       <Field label="Email">
         {(id) => <input id={id} type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} />}
@@ -84,11 +123,24 @@ function LoginForm() {
       )}
 
       {linkSent ? (
-        <p className="border-2 border-teal bg-teal/10 px-4 py-3 text-sm">Check your inbox — the link signs you straight in.</p>
+        <p className="border-2 border-teal bg-teal/10 px-4 py-3 text-sm">
+          Check your inbox and open the link <strong>in this same browser</strong>.{' '}
+          {mode === 'reset' ? 'It lets you choose a new password.' : 'It signs you straight in.'}
+        </p>
       ) : (
         <Button type="submit" disabled={busy || !configured} className="py-3.5">
-          {busy ? 'One sec…' : mode === 'password' ? 'Enter the staff room →' : 'Send sign-in link →'}
+          {busy ? 'One sec…' : mode === 'password' ? 'Enter the staff room →' : mode === 'reset' ? 'Send reset link →' : 'Send sign-in link →'}
         </Button>
+      )}
+      {mode === 'password' && (
+        <button type="button" onClick={() => { setMode('reset'); setError(''); setLinkSent(false); }} className="self-start font-mono text-[11px] uppercase underline underline-offset-4 hover:text-lapis">
+          Forgot / never set a password?
+        </button>
+      )}
+      {mode === 'reset' && (
+        <button type="button" onClick={() => { setMode('password'); setLinkSent(false); }} className="self-start font-mono text-[11px] uppercase underline underline-offset-4 hover:text-lapis">
+          ← Back to password
+        </button>
       )}
     </form>
   );
