@@ -140,7 +140,7 @@ export function Hero() {
       </div>
 
       {/* draggable stickers */}
-      <Sticker bounds={ref} delay={0.62} rotate={-14} className="top-[14%] end-[4%] md:end-[8%] w-28 md:w-56">
+      <Sticker bounds={ref} delay={0.62} rotate={6} className="top-[12%] end-[4%] md:end-[8%] w-24 md:w-44">
         <div className="relative">
           <Logo className="w-full drop-shadow-[6px_8px_0_rgba(22,19,15,0.2)]" />
         </div>

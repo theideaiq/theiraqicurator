@@ -45,7 +45,9 @@
     "feed": "Back-row notes",
     "feed_sub": "Short lessons from the Instagram classroom.",
     "enroll": "Enrol",
-    "enroll_sub": "Want to show work, run a workshop, collaborate or just say hi? Pass a note."
+    "enroll_sub": "Want to show work, run a workshop, collaborate or just say hi? Pass a note.",
+    "classmates": "Classmates",
+    "classmates_sub": "The people, collectives and sponsors who share the desk with us — at Aziza, the Interactive Exhibition and beyond."
   },
   "Timetable": {
     "all": "All",
@@ -201,5 +203,13 @@
     "next": "Next up",
     "today": "Today!",
     "close": "Hide"
+  },
+  "Classmates": {
+    "kinds": {
+      "creative": "Creative partners",
+      "sponsor": "Sponsors",
+      "institution": "Institutions",
+      "platform": "Platform"
+    }
   }
 }

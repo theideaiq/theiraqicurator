@@ -142,3 +142,45 @@ values
    'Institut Français, Baghdad', 'المعهد الفرنسي، بغداد',
    array['Ambassade de France en Irak', 'Institut Français Irak', 'TotalEnergies'], 'lapis')
 on conflict (slug) do nothing;
+
+-- ---------------------------------------------------------------------------
+-- Partners ("classmates"): collaborators, sponsors and institutions
+-- ---------------------------------------------------------------------------
+create table if not exists public.partners (
+  id uuid primary key default gen_random_uuid(),
+  name_en text not null,
+  name_ar text not null default '',
+  kind text not null default 'creative' check (kind in ('creative', 'sponsor', 'institution', 'platform')),
+  url text,
+  note_en text not null default '',
+  note_ar text not null default '',
+  sort integer not null default 0,
+  published boolean not null default true,
+  created_at timestamptz not null default now()
+);
+alter table public.partners enable row level security;
+
+drop policy if exists "public reads published partners" on public.partners;
+create policy "public reads published partners" on public.partners for select using (published = true or public.is_staff());
+drop policy if exists "staff writes partners" on public.partners;
+create policy "staff writes partners" on public.partners for all using (public.is_staff()) with check (public.is_staff());
+
+insert into public.partners (name_en, name_ar, kind, url, note_en, note_ar, sort)
+select * from (values
+  ('Aziza', 'عزيزة', 'creative', 'https://www.instagram.com/aziza.iq/', 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 10),
+  ('StageReads.iq', 'StageReads.iq', 'creative', 'https://www.instagram.com/stagereads.iq/', 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 20),
+  ('Iraqi Zine', 'Iraqi Zine', 'creative', 'https://www.instagram.com/iraqizine/', 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 30),
+  ('Iraqi Archive of Prints', 'الأرشيف العراقي للمطبوعات', 'creative', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 40),
+  ('Poetry Hub', 'Poetry Hub', 'creative', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 50),
+  ('Laheeb', 'لهيب', 'sponsor', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 60),
+  ('Keys of Knowledge Agency', 'Keys of Knowledge', 'sponsor', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 70),
+  ('Kalleh', 'كاله', 'sponsor', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 80),
+  ('Shotsfresh', 'Shotsfresh', 'sponsor', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 90),
+  ('Guru Camp', 'Guru Camp', 'sponsor', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 100),
+  ('itel', 'itel', 'sponsor', null, 'Aziza art exhibition, 2026', 'معرض عزيزة الفني، ٢٠٢٦', 110),
+  ('Institut Français d’Irak', 'المعهد الفرنسي في العراق', 'institution', null, 'The Interactive Exhibition', 'المعرض التفاعلي', 120),
+  ('Ambassade de France en Irak', 'السفارة الفرنسية في العراق', 'institution', null, 'The Interactive Exhibition', 'المعرض التفاعلي', 130),
+  ('TotalEnergies', 'توتال إنرجيز', 'institution', null, 'The Interactive Exhibition', 'المعرض التفاعلي', 140),
+  ('The IDEA', 'IDEA', 'platform', 'https://theideaiq.com', 'Builds and runs this platform', 'تبني وتدير هذه المنصة', 150)
+) as seed(name_en, name_ar, kind, url, note_en, note_ar, sort)
+where not exists (select 1 from public.partners);

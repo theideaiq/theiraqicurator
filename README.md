@@ -16,11 +16,18 @@ curator manages everything. One repo, one deploy. Built and run in partnership w
 | `/blog` | Curations (essays) |
 | `/syllabus` | Index of Iraqi artists |
 | `/manifesto` | House rules + colophon |
-| `/admin` | Staff room: curations, museum, timetable, inbox (sign-in required) |
+| `/admin` | Staff room: curations, museum, timetable, partners, inbox (sign-in required) |
 
-Content lives in Supabase (`curations`, `artworks`, `events`, `notes`). The syllabus, quiz and
+Content lives in Supabase (`curations`, `artworks`, `events`, `partners`, `notes`). The syllabus, quiz and
 manifesto live in `src/lib/content.ts`; the timetable falls back to the list there until the
-`events` table has rows.
+`events` table has rows (partners likewise fall back to the list there).
+
+## Brand
+
+The taped-samoon mark lives in `src/components/Logo.tsx` (vector, drawn from the Instagram
+avatar). Ready-made files for print and social are in `public/brand/`:
+`samoon.svg/.png` (transparent), `samoon-badge.svg/.png` (round sticker) and
+`lockup.svg/.png` (mark + wordmark).
 
 ## Run it
 
@@ -33,8 +40,8 @@ pnpm dev                     # http://localhost:3000, staff room at /admin
 ## Supabase setup (once)
 
 1. Run `supabase/migrations/20261024000000_platform.sql` in the Supabase SQL editor. It adds
-   the `events`, `notes` and `staff` tables, row-level security, and the `museum-assets`
-   storage bucket, and seeds the timetable.
+   the `events`, `partners`, `notes` and `staff` tables, row-level security, and the `museum-assets`
+   storage bucket, and seeds the timetable and partners.
 2. Create a user for each staff member (Authentication → Users → Add user), then add them to
    the allowlist:
    ```sql

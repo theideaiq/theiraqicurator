@@ -7,6 +7,7 @@ import { PopQuiz } from '@/components/home/PopQuiz';
 import { SealMaker } from '@/components/home/SealMaker';
 import { BackRow } from '@/components/home/BackRow';
 import { Enroll } from '@/components/home/Enroll';
+import { Classmates } from '@/components/home/Classmates';
 import { Marquee } from '@/components/ui/Marquee';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { TICKER, pick } from '@/lib/content';
@@ -53,8 +54,13 @@ export default async function Home() {
         <BackRow />
       </section>
 
+      <section id="classmates" className="px-4 md:px-8 py-24 md:py-32 paper-grid border-t-2 border-ink">
+        <SectionHeading index="06" title={t('classmates')} sub={t('classmates_sub')} />
+        <Classmates />
+      </section>
+
       <section id="enroll" className="px-4 md:px-8 py-24 md:py-32 bg-paper-2 border-t-2 border-ink">
-        <SectionHeading index="06" title={t('enroll')} sub={t('enroll_sub')} />
+        <SectionHeading index="07" title={t('enroll')} sub={t('enroll_sub')} />
         <Enroll />
       </section>
     </>

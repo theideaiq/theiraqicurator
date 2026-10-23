@@ -389,3 +389,39 @@ export const MANIFESTO: Bilingual[] = [
   { en: 'Tape it to the wall. Frames are optional.', ar: 'الصقها بالشريط على الحايط. البراويز اختيارية.' },
   { en: 'Everyone is an artist until the bell rings. And after.', ar: 'الكل فنانين لحد ما يدگ الجرس. وبعده هم.' },
 ];
+
+/* ------------------------------------------------------------------ */
+/* Partners — the classmates who share the desk                        */
+/* (fallback for the `partners` table, edited from /admin/partners)   */
+/* ------------------------------------------------------------------ */
+
+export type PartnerKind = 'creative' | 'sponsor' | 'institution' | 'platform';
+
+export type Partner = {
+  id: string;
+  name: Bilingual;
+  kind: PartnerKind;
+  url?: string | null;
+  note: Bilingual;
+};
+
+const AZIZA: Bilingual = { en: 'Aziza art exhibition, 2026', ar: 'معرض عزيزة الفني، ٢٠٢٦' };
+const INTERACTIVE: Bilingual = { en: 'The Interactive Exhibition', ar: 'المعرض التفاعلي' };
+
+export const PARTNERS: Partner[] = [
+  { id: 'aziza', name: { en: 'Aziza', ar: 'عزيزة' }, kind: 'creative', url: 'https://www.instagram.com/aziza.iq/', note: AZIZA },
+  { id: 'stagereads', name: { en: 'StageReads.iq', ar: 'StageReads.iq' }, kind: 'creative', url: 'https://www.instagram.com/stagereads.iq/', note: AZIZA },
+  { id: 'iraqi-zine', name: { en: 'Iraqi Zine', ar: 'Iraqi Zine' }, kind: 'creative', url: 'https://www.instagram.com/iraqizine/', note: AZIZA },
+  { id: 'print-archive', name: { en: 'Iraqi Archive of Prints', ar: 'الأرشيف العراقي للمطبوعات' }, kind: 'creative', note: AZIZA },
+  { id: 'poetry-hub', name: { en: 'Poetry Hub', ar: 'Poetry Hub' }, kind: 'creative', note: AZIZA },
+  { id: 'laheeb', name: { en: 'Laheeb', ar: 'لهيب' }, kind: 'sponsor', note: AZIZA },
+  { id: 'keys-of-knowledge', name: { en: 'Keys of Knowledge Agency', ar: 'Keys of Knowledge' }, kind: 'sponsor', note: AZIZA },
+  { id: 'kalleh', name: { en: 'Kalleh', ar: 'كاله' }, kind: 'sponsor', note: AZIZA },
+  { id: 'shotsfresh', name: { en: 'Shotsfresh', ar: 'Shotsfresh' }, kind: 'sponsor', note: AZIZA },
+  { id: 'guru-camp', name: { en: 'Guru Camp', ar: 'Guru Camp' }, kind: 'sponsor', note: AZIZA },
+  { id: 'itel', name: { en: 'itel', ar: 'itel' }, kind: 'sponsor', note: AZIZA },
+  { id: 'institut-francais', name: { en: 'Institut Français d’Irak', ar: 'المعهد الفرنسي في العراق' }, kind: 'institution', note: INTERACTIVE },
+  { id: 'ambassade', name: { en: 'Ambassade de France en Irak', ar: 'السفارة الفرنسية في العراق' }, kind: 'institution', note: INTERACTIVE },
+  { id: 'totalenergies', name: { en: 'TotalEnergies', ar: 'توتال إنرجيز' }, kind: 'institution', note: INTERACTIVE },
+  { id: 'idea', name: { en: 'The IDEA', ar: 'IDEA' }, kind: 'platform', url: 'https://theideaiq.com', note: { en: 'Builds and runs this platform', ar: 'تبني وتدير هذه المنصة' } },
+];

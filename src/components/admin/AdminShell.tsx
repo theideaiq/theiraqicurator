@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { BookOpen, CalendarDays, Frame, Inbox, LayoutGrid, ExternalLink, Menu, X } from 'lucide-react';
+import { BookOpen, CalendarDays, Frame, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, X } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { BaghdadClock } from '@/components/layout/BaghdadClock';
@@ -14,6 +14,7 @@ const NAV = [
   { href: '/admin/curations', label: 'Curations', icon: BookOpen },
   { href: '/admin/artworks', label: 'Museum', icon: Frame },
   { href: '/admin/timetable', label: 'Timetable', icon: CalendarDays },
+  { href: '/admin/partners', label: 'Partners', icon: Handshake },
   { href: '/admin/inbox', label: 'Inbox', icon: Inbox },
 ];
 
