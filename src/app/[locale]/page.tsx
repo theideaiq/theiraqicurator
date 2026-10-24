@@ -5,7 +5,7 @@ import { Timetable } from '@/components/home/Timetable';
 import { Curriculum } from '@/components/home/Curriculum';
 import { PopQuiz } from '@/components/home/PopQuiz';
 import { SealMaker } from '@/components/home/SealMaker';
-import { BackRow } from '@/components/home/BackRow';
+import { LatestCurations } from '@/components/home/LatestCurations';
 import { Enroll } from '@/components/home/Enroll';
 import { Classmates } from '@/components/home/Classmates';
 import { Marquee } from '@/components/ui/Marquee';
@@ -47,14 +47,14 @@ export default async function Home() {
         <PopQuiz />
       </section>
 
-      <section className="px-4 md:px-8 py-24 md:py-32 bg-ink text-paper">
+      <section className="px-4 md:px-8 py-24 md:py-32 bg-coal text-chalk">
         <SectionHeading index="04" title={t('seal')} sub={t('seal_sub')} tone="paper" />
         <SealMaker />
       </section>
 
       <section className="px-4 md:px-8 py-24 md:py-32">
-        <SectionHeading index="05" title={t('feed')} sub={t('feed_sub')} />
-        <BackRow />
+        <SectionHeading index="05" title={t('latest')} sub={t('latest_sub')} />
+        <LatestCurations />
       </section>
 
       <section id="classmates" className="px-4 md:px-8 py-24 md:py-32 paper-grid border-t-2 border-ink">

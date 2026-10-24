@@ -12,7 +12,7 @@ export const pick = (value: Bilingual, locale: string) => (locale === 'ar' ? val
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/theiraqicurator/',
   instagramHandle: '@theiraqicurator',
-  email: 'iraqicurator@gmail.com',
+  email: 'hello@theiraqicurator.org',
 };
 
 /* ------------------------------------------------------------------ */
@@ -392,7 +392,7 @@ export const MANIFESTO: Bilingual[] = [
 
 /* ------------------------------------------------------------------ */
 /* Partners — the classmates who share the desk                        */
-/* (fallback for the `partners` table, edited from /admin/partners)   */
+/* (fallback for the `partners` table, edited from /staff/partners)   */
 /* ------------------------------------------------------------------ */
 
 export type PartnerKind = 'creative' | 'sponsor' | 'institution' | 'platform';
@@ -423,5 +423,5 @@ export const PARTNERS: Partner[] = [
   { id: 'institut-francais', name: { en: 'Institut Français d’Irak', ar: 'المعهد الفرنسي في العراق' }, kind: 'institution', note: INTERACTIVE },
   { id: 'ambassade', name: { en: 'Ambassade de France en Irak', ar: 'السفارة الفرنسية في العراق' }, kind: 'institution', note: INTERACTIVE },
   { id: 'totalenergies', name: { en: 'TotalEnergies', ar: 'توتال إنرجيز' }, kind: 'institution', note: INTERACTIVE },
-  { id: 'idea', name: { en: 'The IDEA', ar: 'IDEA' }, kind: 'platform', url: 'https://theideaiq.com', note: { en: 'Builds and runs this platform', ar: 'تبني وتدير هذه المنصة' } },
+  { id: 'idea', name: { en: 'The IDEA', ar: 'IDEA' }, kind: 'platform', url: 'https://theideaiq.com', note: { en: 'Technology partner — built and hosts this platform', ar: 'الشريك التقني — بنى المنصة ويستضيفها' } },
 ];

@@ -10,7 +10,7 @@ export function SectionHeading({
   sub?: string;
   tone?: 'ink' | 'paper';
 }) {
-  const muted = tone === 'paper' ? 'text-paper/70' : 'text-ink/60';
+  const muted = tone === 'paper' ? 'opacity-70' : 'text-ink/60';
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
       <h2 className="flex items-start gap-3 font-display text-6xl md:text-8xl leading-[0.9]">

@@ -77,7 +77,7 @@ export function SealMaker() {
           setRolls((r) => r + 1);
         }}
       >
-        <label htmlFor={inputId} className="font-mono text-xs uppercase text-paper/70">
+        <label htmlFor={inputId} className="font-mono text-xs uppercase text-chalk/70">
           {t('label')}
         </label>
         <input
@@ -89,13 +89,13 @@ export function SealMaker() {
             setRolls((r) => r + 1);
           }}
           placeholder={t('placeholder')}
-          className="w-full bg-transparent border-b-2 border-paper py-3 font-display text-4xl text-paper placeholder:text-paper/30 focus:outline-none focus:border-saffron"
+          className="w-full bg-transparent border-b-2 border-chalk py-3 font-display text-4xl text-chalk placeholder:text-chalk/30 focus:outline-none focus:border-saffron"
         />
         <div className="flex flex-wrap gap-3 mt-2">
           <button
             type="submit"
             disabled={!glyphs}
-            className="px-5 py-3 bg-saffron text-ink rounded-full font-mono text-xs uppercase disabled:opacity-40 hover:bg-paper"
+            className="px-5 py-3 bg-saffron text-coal rounded-full font-mono text-xs uppercase disabled:opacity-40 hover:bg-chalk"
           >
             ⟳ {t('roll')}
           </button>
@@ -103,22 +103,22 @@ export function SealMaker() {
             type="button"
             onClick={download}
             disabled={!glyphs}
-            className="px-5 py-3 border-2 border-paper text-paper rounded-full font-mono text-xs uppercase disabled:opacity-40 hover:bg-paper hover:text-ink"
+            className="px-5 py-3 border-2 border-chalk text-chalk rounded-full font-mono text-xs uppercase disabled:opacity-40 hover:bg-chalk hover:text-coal"
           >
             ↓ {t('download')}
           </button>
         </div>
-        <p className="text-xs text-paper/50 leading-relaxed">{t('disclaimer')}</p>
+        <p className="text-xs text-chalk/50 leading-relaxed">{t('disclaimer')}</p>
       </form>
 
       <div className="lg:col-span-8 flex flex-col items-center gap-0" dir="ltr">
         {/* the stone cylinder */}
-        <div className="relative w-48 md:w-64 h-24 md:h-28 rounded-[1.25rem/50%] overflow-hidden border-2 border-ink shadow-[inset_0_-14px_18px_rgba(0,0,0,0.45),inset_0_10px_14px_rgba(255,255,255,0.25)] bg-gradient-to-b from-[#6f7f86] via-[#a9b5b8] to-[#4d5a60]">
+        <div className="relative w-48 md:w-64 h-24 md:h-28 rounded-[1.25rem/50%] overflow-hidden border-2 border-coal shadow-[inset_0_-14px_18px_rgba(0,0,0,0.45),inset_0_10px_14px_rgba(255,255,255,0.25)] bg-gradient-to-b from-[#6f7f86] via-[#a9b5b8] to-[#4d5a60]">
           {/* seals are carved in mirror image */}
           <div className="absolute inset-0 -scale-x-100" aria-hidden>
             <div
               key={`cyl-${rolls}`}
-              className="flex h-full w-max items-center whitespace-nowrap text-4xl md:text-5xl text-ink/50 animate-marquee [animation-duration:6s]"
+              className="flex h-full w-max items-center whitespace-nowrap text-4xl md:text-5xl text-coal/50 animate-marquee [animation-duration:6s]"
               style={{ fontFamily: cuneiform.style.fontFamily }}
             >
               <span className="px-4">{glyphs || '𒀭 𒀭 𒀭'}</span>
@@ -129,7 +129,7 @@ export function SealMaker() {
 
         {/* the clay strip */}
         <div
-          className="relative w-full -mt-3 h-40 md:h-48 rounded-md overflow-hidden border-2 border-ink"
+          className="relative w-full -mt-3 h-40 md:h-48 rounded-md overflow-hidden border-2 border-coal"
           style={{
             background: `radial-gradient(120% 80% at 50% 0%, #dba274 0%, ${CLAY} 55%, #9c6036 100%)`,
           }}
@@ -163,7 +163,7 @@ export function SealMaker() {
               </p>
             </motion.div>
           ) : (
-            <p className="absolute inset-0 flex items-center justify-center font-mono text-xs uppercase text-ink/60">
+            <p className="absolute inset-0 flex items-center justify-center font-mono text-xs uppercase text-coal/60">
               {t('empty')}
             </p>
           )}

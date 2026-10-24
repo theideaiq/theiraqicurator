@@ -4,7 +4,7 @@ import type { Database } from './types';
 
 /**
  * Refreshes the Supabase session cookie on `response` and returns the user,
- * so the proxy can decide whether /admin is allowed.
+ * so the proxy can decide whether /staff is allowed.
  */
 export async function updateSession(request: NextRequest, response: NextResponse) {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {

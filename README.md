@@ -2,8 +2,8 @@
 
 *The art class we didn't take at school / درس الفنية اللي ما اخذناه بالمدرسة*
 
-A single Next.js app: the bilingual public site **and** the staff room (`/admin`) where the
-curator manages everything. One repo, one deploy. Built and run in partnership with
+A single Next.js app: the bilingual public site **and** the staff room (`/staff`) where the
+curator manages everything. One repo, one deploy. Built and hosted by our technology partner
 [The IDEA](https://theideaiq.com).
 
 ## What's inside
@@ -16,7 +16,7 @@ curator manages everything. One repo, one deploy. Built and run in partnership w
 | `/blog` | Curations (essays) |
 | `/syllabus` | Index of Iraqi artists |
 | `/manifesto` | House rules + colophon |
-| `/admin` | Staff room: curations, museum, timetable, partners, inbox (sign-in required) |
+| `/staff` | Staff room: curations, museum, timetable, partners, inbox (sign-in required) |
 
 Content lives in Supabase (`curations`, `artworks`, `events`, `partners`, `notes`). The syllabus, quiz and
 manifesto live in `src/lib/content.ts`; the timetable falls back to the list there until the
@@ -32,12 +32,17 @@ Files in `public/brand/`:
 - `samoon-badge.png`: the round sticker version (avatars)
 - `lockup.png`: the mark above the "The Iraqi Curator" wordmark
 
+## Email
+
+The site lists **hello@theiraqicurator.org**. Set it up with Cloudflare Email Routing
+(Email → Email Routing → Routing rules) forwarding to the curator's inbox.
+
 ## Run it
 
 ```bash
 pnpm install
 cp .env.example .env.local   # fill in your Supabase URL + anon key
-pnpm dev                     # http://localhost:3000, staff room at /admin
+pnpm dev                     # http://localhost:3000, staff room at /staff
 ```
 
 ## Supabase setup (once)
@@ -51,7 +56,7 @@ pnpm dev                     # http://localhost:3000, staff room at /admin
    insert into public.staff (email, name) values ('ali@example.com', 'Ali');
    ```
 3. Turn off public sign-ups (Authentication → Providers → Email) — only invited staff need accounts.
-4. For "email me a link" sign-in, add `https://<your-domain>/admin/auth/callback` to
+4. For "email me a link" sign-in, add `https://<your-domain>/staff/auth/callback` to
    Authentication → URL Configuration → Redirect URLs.
 
 ## Deploy

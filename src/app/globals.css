@@ -15,6 +15,9 @@
   --color-teal: #12a39a;
   --color-brick: #d9381e;
   --color-clay: #b9774a;
+  /* fixed darks/lights that do NOT flip in night mode (footer, seal room) */
+  --color-coal: #16130f;
+  --color-chalk: #f3ecdf;
 
   --animate-marquee: marquee 38s linear infinite;
   --animate-spin-slow: spin 18s linear infinite;
@@ -50,9 +53,16 @@ html[lang="ar"] {
 
 html {
   scroll-behavior: smooth;
-  /* Paint the canvas too, so iOS overscroll and any gap never flash white. */
-  background-color: var(--color-paper);
+  /* The canvas shows below the last element (Android's edge-to-edge gesture
+     bar, iOS overscroll). The page always ends on the dark footer, so paint
+     it to match instead of letting a pale strip show. */
+  background-color: var(--color-coal);
   overflow-x: clip;
+}
+
+/* The staff room has no dark footer, so its canvas stays paper. */
+html.staff-root {
+  background-color: var(--color-paper);
 }
 
 body {
