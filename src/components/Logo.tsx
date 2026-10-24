@@ -20,7 +20,7 @@ export function Logo({
       width={480}
       height={581}
       draggable={false}
-      className={badge ? 'h-[80%] w-auto' : 'w-full h-full object-contain'}
+      className={badge ? 'w-[66%] h-auto' : 'w-full h-full object-contain'}
     />
   );
 

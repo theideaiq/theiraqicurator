@@ -21,10 +21,13 @@ export default async function Home() {
     <>
       <Hero />
 
-      <Marquee
-        className="bg-ink text-paper py-3 border-y-2 border-ink -rotate-1 scale-[1.02]"
-        items={TICKER.map((item) => pick(item, locale))}
-      />
+      {/* the tilted ticker is wider than the screen; keep it inside the page */}
+      <div className="overflow-hidden py-2 -my-2">
+        <Marquee
+          className="bg-ink text-paper py-3 border-y-2 border-ink -rotate-1 scale-[1.02]"
+          items={TICKER.map((item) => pick(item, locale))}
+        />
+      </div>
 
       <section className="px-4 md:px-8 py-24 md:py-32">
         <SectionHeading index="01" title={t('timetable')} sub={t('timetable_sub')} />

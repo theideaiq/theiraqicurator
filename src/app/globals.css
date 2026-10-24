@@ -50,12 +50,16 @@ html[lang="ar"] {
 
 html {
   scroll-behavior: smooth;
+  /* Paint the canvas too, so iOS overscroll and any gap never flash white. */
+  background-color: var(--color-paper);
+  overflow-x: clip;
 }
 
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);
-  overflow-x: hidden;
+  /* clip (not hidden): stops sideways scrolling without breaking sticky elements */
+  overflow-x: clip;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
