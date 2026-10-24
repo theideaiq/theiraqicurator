@@ -3,16 +3,20 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { BookOpen, CalendarDays, Frame, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, X } from 'lucide-react';
+import { BookOpen, CalendarDays, CircleHelp, Frame, GraduationCap, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, ScrollText, X } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { SignOut } from './SignOut';
 
+// Same order as the site's curriculum, then the home-page extras and the inbox.
 const NAV = [
   { href: '/staff', label: 'Overview', icon: LayoutGrid, exact: true },
-  { href: '/staff/curations', label: 'Curations', icon: BookOpen },
   { href: '/staff/artworks', label: 'Museum', icon: Frame },
+  { href: '/staff/curations', label: 'Curations', icon: BookOpen },
+  { href: '/staff/syllabus', label: 'Syllabus', icon: GraduationCap },
   { href: '/staff/timetable', label: 'Timetable', icon: CalendarDays },
+  { href: '/staff/manifesto', label: 'Manifesto', icon: ScrollText },
+  { href: '/staff/quiz', label: 'Pop quiz', icon: CircleHelp },
   { href: '/staff/partners', label: 'Partners', icon: Handshake },
   { href: '/staff/inbox', label: 'Inbox', icon: Inbox },
 ];

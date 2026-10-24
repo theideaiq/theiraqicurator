@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import { MANIFESTO, pick } from '@/lib/content';
+import { pick } from '@/lib/content';
+import { useManifesto } from '@/lib/editable';
 
 const STYLES = [
   'bg-saffron',
@@ -18,10 +19,11 @@ const STYLES = [
 export function ManifestoRules() {
   const t = useTranslations('Manifesto');
   const locale = useLocale();
+  const rules = useManifesto();
 
   return (
     <ol className="flex flex-col gap-6">
-      {MANIFESTO.map((rule, i) => {
+      {rules.map((rule, i) => {
         const other = locale === 'ar' ? rule.en : rule.ar;
         return (
           <motion.li

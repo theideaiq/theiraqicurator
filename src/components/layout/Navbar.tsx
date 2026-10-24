@@ -5,15 +5,10 @@ import { Link, usePathname } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
+import { SECTIONS as LINKS } from '@/lib/sections';
 import { Logo } from '@/components/Logo';
 
-const LINKS = [
-  { href: '/timetable', key: 'timetable', n: '01' },
-  { href: '/museum', key: 'museum', n: '02' },
-  { href: '/blog', key: 'blog', n: '03' },
-  { href: '/syllabus', key: 'syllabus', n: '04' },
-  { href: '/manifesto', key: 'manifesto', n: '05' },
-] as const;
+
 
 export function Navbar() {
   const locale = useLocale();

@@ -16,9 +16,10 @@ curator manages everything. One repo, one deploy. Built and hosted by our techno
 | `/blog` | Curations (essays) |
 | `/syllabus` | Index of Iraqi artists |
 | `/manifesto` | House rules + colophon |
-| `/staff` | Staff room: curations, museum, timetable, partners, inbox (sign-in required) |
+| `/staff` | Staff room: museum, curations, syllabus, timetable, manifesto, quiz, partners, inbox |
 
-Content lives in Supabase (`curations`, `artworks`, `events`, `partners`, `notes`). The syllabus, quiz and
+Content lives in Supabase (`curations`, `artworks`, `events`, `partners`, `syllabus_artists`,
+`quiz_questions`, `manifesto_rules`, `notes`), all edited from the staff room. The syllabus, quiz and
 manifesto live in `src/lib/content.ts`; the timetable falls back to the list there until the
 `events` table has rows (partners likewise fall back to the list there).
 

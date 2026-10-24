@@ -4,6 +4,7 @@ import { Link } from '@/i18n/routing';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { ManifestoRules } from '@/components/manifesto/ManifestoRules';
 import { Logo } from '@/components/Logo';
+import { sectionNumber } from '@/lib/sections';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -17,7 +18,7 @@ export default async function ManifestoPage() {
 
   return (
     <>
-      <PageHeader eyebrow="§05" title={t('title')} sub={t('sub')} accent="bg-rose" />
+      <PageHeader eyebrow={sectionNumber('manifesto')} title={t('title')} sub={t('sub')} accent="bg-rose" />
 
       <section className="px-4 md:px-8 pb-24">
         <ManifestoRules />
