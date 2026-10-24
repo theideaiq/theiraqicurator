@@ -3,7 +3,8 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import { DISCIPLINES, SYLLABUS, pick, type Discipline } from '@/lib/content';
+import { DISCIPLINES, pick, type Discipline } from '@/lib/content';
+import { useSyllabus } from '@/lib/editable';
 
 const TINTS = ['bg-paper', 'bg-saffron/40', 'bg-rose/30', 'bg-teal/25', 'bg-lapis/15'];
 
@@ -12,15 +13,16 @@ export function SyllabusIndex() {
   const locale = useLocale();
   const [query, setQuery] = useState('');
   const [discipline, setDiscipline] = useState<Discipline | 'all'>('all');
+  const syllabus = useSyllabus();
 
   const artists = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return SYLLABUS.filter((a) => {
+    return syllabus.filter((a) => {
       if (discipline !== 'all' && !a.disciplines.includes(discipline)) return false;
       if (!q) return true;
       return [a.name.en, a.name.ar, a.note.en, a.note.ar].some((s) => s.toLowerCase().includes(q));
     });
-  }, [query, discipline]);
+  }, [query, discipline, syllabus]);
 
   const wiki = (name: string) =>
     `https://${locale === 'ar' ? 'ar' : 'en'}.wikipedia.org/w/index.php?search=${encodeURIComponent(name)}`;
@@ -69,7 +71,7 @@ export function SyllabusIndex() {
             >
               {/* index-card header line */}
               <div className="flex items-center justify-between font-mono text-[11px] uppercase border-b-2 border-brick/70 pb-2">
-                <span>№ {String(SYLLABUS.indexOf(a) + 1).padStart(2, '0')}</span>
+                <span>№ {String(syllabus.indexOf(a) + 1).padStart(2, '0')}</span>
                 <span>{a.years}</span>
               </div>
               <h2 className="mt-4 font-display text-4xl leading-none">{pick(a.name, locale)}</h2>

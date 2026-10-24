@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
-import { QUIZ, pick } from '@/lib/content';
+import { pick } from '@/lib/content';
+import { useQuiz } from '@/lib/editable';
 
 const LETTERS = { en: ['A', 'B', 'C', 'D'], ar: ['أ', 'ب', 'ج', 'د'] };
 
@@ -23,10 +24,12 @@ export function PopQuiz() {
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
   const [copied, setCopied] = useState(false);
+  const quiz = useQuiz();
 
-  const question = QUIZ[index];
+  // the list can change once database rows load; never read past its end
+  const question = quiz[Math.min(index, quiz.length - 1)];
   const letters = locale === 'ar' ? LETTERS.ar : LETTERS.en;
-  const isLast = index === QUIZ.length - 1;
+  const isLast = index === quiz.length - 1;
 
   const choose = (i: number) => {
     if (picked !== null) return;
@@ -51,13 +54,13 @@ export function PopQuiz() {
     setCopied(false);
   };
 
-  const result = gradeFor(score, QUIZ.length);
+  const result = gradeFor(score, quiz.length);
 
   const share = async () => {
     const text =
       locale === 'ar'
-        ? `حصلت على ${score}/${QUIZ.length} (${result.grade}) بامتحان القيّم العراقي المفاجئ. ${window.location.origin}`
-        : `I got ${score}/${QUIZ.length} (${result.grade}) on The Iraqi Curator's pop quiz. ${window.location.origin}`;
+        ? `حصلت على ${score}/${quiz.length} (${result.grade}) بامتحان القيّم العراقي المفاجئ. ${window.location.origin}`
+        : `I got ${score}/${quiz.length} (${result.grade}) on The Iraqi Curator's pop quiz. ${window.location.origin}`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -70,7 +73,7 @@ export function PopQuiz() {
     <div className="relative bg-paper text-ink border-2 border-ink hard-shadow paper-grid max-w-3xl mx-auto">
       {/* progress strip */}
       <div className="flex border-b-2 border-ink" aria-hidden>
-        {QUIZ.map((_, i) => (
+        {quiz.map((_, i) => (
           <span
             key={i}
             className={`h-3 flex-1 border-e border-ink last:border-e-0 ${
@@ -91,7 +94,7 @@ export function PopQuiz() {
               transition={{ duration: 0.3 }}
             >
               <p className="font-mono text-xs uppercase text-ink/60" aria-live="polite">
-                {t('question')} {index + 1} {t('of')} {QUIZ.length}
+                {t('question')} {index + 1} {t('of')} {quiz.length}
               </p>
               <h3 className="mt-3 font-display text-3xl md:text-4xl leading-tight">{pick(question.q, locale)}</h3>
 
@@ -156,7 +159,7 @@ export function PopQuiz() {
                 <div className="p-5 border-e-2 border-ink">
                   <p className="font-mono text-[11px] uppercase text-ink/60">{t('score')}</p>
                   <p className="font-display text-6xl">
-                    {score}/{QUIZ.length}
+                    {score}/{quiz.length}
                   </p>
                 </div>
                 <div className="p-5 relative">

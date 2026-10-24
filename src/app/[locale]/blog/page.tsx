@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { getSupabase, readingMinutes } from '@/lib/supabase';
+import { sectionNumber } from '@/lib/sections';
 
 type Curation = {
   id: string;
@@ -57,7 +58,7 @@ export default function BlogList() {
 
   return (
     <>
-      <PageHeader eyebrow="§03" title={t('title')} sub={t('sub')} accent="bg-rose">
+      <PageHeader eyebrow={sectionNumber('blog')} title={t('title')} sub={t('sub')} accent="bg-rose">
         <input
           type="search"
           value={query}

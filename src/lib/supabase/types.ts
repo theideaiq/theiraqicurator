@@ -158,6 +158,33 @@ export type Database = {
         }
         Relationships: []
       }
+      manifesto_rules: {
+        Row: {
+          created_at: string
+          id: string
+          published: boolean
+          rule_ar: string
+          rule_en: string
+          sort: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          published?: boolean
+          rule_ar?: string
+          rule_en: string
+          sort?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          published?: boolean
+          rule_ar?: string
+          rule_en?: string
+          sort?: number
+        }
+        Relationships: []
+      }
       notes: {
         Row: {
           created_at: string
@@ -257,6 +284,84 @@ export type Database = {
           published?: boolean | null
           slug?: string
           title?: string
+        }
+        Relationships: []
+      }
+      quiz_questions: {
+        Row: {
+          answer: number
+          created_at: string
+          id: string
+          options: Json
+          published: boolean
+          question_ar: string
+          question_en: string
+          sort: number
+          why_ar: string
+          why_en: string
+        }
+        Insert: {
+          answer?: number
+          created_at?: string
+          id?: string
+          options?: Json
+          published?: boolean
+          question_ar?: string
+          question_en: string
+          sort?: number
+          why_ar?: string
+          why_en?: string
+        }
+        Update: {
+          answer?: number
+          created_at?: string
+          id?: string
+          options?: Json
+          published?: boolean
+          question_ar?: string
+          question_en?: string
+          sort?: number
+          why_ar?: string
+          why_en?: string
+        }
+        Relationships: []
+      }
+      syllabus_artists: {
+        Row: {
+          created_at: string
+          disciplines: string[]
+          id: string
+          name_ar: string
+          name_en: string
+          note_ar: string
+          note_en: string
+          published: boolean
+          sort: number
+          years: string
+        }
+        Insert: {
+          created_at?: string
+          disciplines?: string[]
+          id?: string
+          name_ar?: string
+          name_en: string
+          note_ar?: string
+          note_en?: string
+          published?: boolean
+          sort?: number
+          years?: string
+        }
+        Update: {
+          created_at?: string
+          disciplines?: string[]
+          id?: string
+          name_ar?: string
+          name_en?: string
+          note_ar?: string
+          note_en?: string
+          published?: boolean
+          sort?: number
+          years?: string
         }
         Relationships: []
       }

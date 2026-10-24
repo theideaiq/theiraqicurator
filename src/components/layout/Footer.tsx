@@ -4,6 +4,7 @@ import NextLink from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { SOCIAL } from '@/lib/content';
+import { SECTIONS } from '@/lib/sections';
 import { Marquee } from '@/components/ui/Marquee';
 
 export function Footer() {
@@ -36,9 +37,9 @@ export function Footer() {
         </div>
 
         <ul className="md:col-span-3 font-mono text-xs uppercase space-y-2">
-          {(['timetable', 'museum', 'blog', 'syllabus', 'manifesto'] as const).map((key) => (
+          {SECTIONS.map(({ href, key }) => (
             <li key={key}>
-              <Link href={key === 'blog' ? '/blog' : `/${key}`} className="hover:text-saffron">
+              <Link href={href} className="hover:text-saffron">
                 → {nav(key)}
               </Link>
             </li>

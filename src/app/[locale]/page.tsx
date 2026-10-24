@@ -42,7 +42,7 @@ export default async function Home() {
         <Curriculum />
       </section>
 
-      <section className="px-4 md:px-8 py-24 md:py-32 bg-lapis text-paper">
+      <section id="quiz" className="px-4 md:px-8 py-24 md:py-32 bg-lapis text-paper">
         <SectionHeading index="03" title={t('quiz')} sub={t('quiz_sub')} tone="paper" />
         <PopQuiz />
       </section>
