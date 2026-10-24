@@ -14,6 +14,7 @@ type Curation = {
   excerpt: string | null;
   content: string;
   image_url: string | null;
+  video_url: string | null;
   created_at: string;
 };
 
@@ -99,6 +100,7 @@ export default function BlogList() {
                   <div>
                     <p className="font-mono text-[11px] uppercase text-brick">
                       {formatDate(post.created_at)} · {readingMinutes(post.content)} {t('min')}
+                      {post.video_url && ' · ▶'}
                     </p>
                     <h2 className="mt-2 font-display text-4xl md:text-6xl leading-[0.95] group-hover:italic">{post.title}</h2>
                     {post.excerpt && <p className="mt-3 max-w-2xl text-sm text-ink/70 line-clamp-2">{post.excerpt}</p>}

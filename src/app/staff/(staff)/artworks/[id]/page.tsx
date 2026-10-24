@@ -132,7 +132,7 @@ export default function ArtworkEditor({ params }: { params: Promise<{ id: string
 
         <div className="flex flex-col gap-6">
           <Field label="Title">
-            {(fid) => <input id={fid} dir="auto" required value={form.title} onChange={(e) => set('title', e.target.value)} className={`${inputClass} font-display !text-2xl`} />}
+            {(fid) => <input id={fid} dir="auto" required value={form.title} onChange={(e) => set('title', e.target.value)} className={`${inputClass} font-display !text-xl md:!text-2xl`} />}
           </Field>
           <Field label="Artist">
             {(fid) => <input id={fid} dir="auto" required value={form.artist} onChange={(e) => set('artist', e.target.value)} className={inputClass} />}

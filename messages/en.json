@@ -41,12 +41,12 @@
     "quiz_sub": "Close your books. Six questions on the art history you were never taught.",
     "seal": "The Seal Room",
     "seal_sub": "Five thousand years ago you'd sign with a cylinder seal. Type your name, roll it in clay, keep the impression.",
-    "feed": "Back-row notes",
-    "feed_sub": "Short lessons from the Instagram classroom.",
     "enroll": "Enrol",
     "enroll_sub": "Want to show work, run a workshop, collaborate or just say hi? Pass a note.",
     "classmates": "Classmates",
-    "classmates_sub": "The people, collectives and sponsors who share the desk with us — at Aziza, the Interactive Exhibition and beyond."
+    "classmates_sub": "The people, collectives and sponsors who share the desk with us — at Aziza, the Interactive Exhibition and beyond.",
+    "latest": "Fresh from the notebook",
+    "latest_sub": "The newest curations — essays, notes and short video lessons."
   },
   "Timetable": {
     "all": "All",
@@ -129,9 +129,6 @@
     "sending": "Passing…",
     "saved": "Note received — it’s on the curator’s desk. We’ll get back to you."
   },
-  "Feed": {
-    "watch": "Watch on Instagram"
-  },
   "Blog": {
     "title": "Curations",
     "sub": "Essays, thoughts and editorial notes from the curator's desk.",
@@ -144,7 +141,8 @@
     "back": "Back to all curations",
     "share": "Copy link",
     "copied": "Link copied",
-    "offline": "The archive isn't connected right now."
+    "offline": "The archive isn't connected right now.",
+    "watch": "Watch on Instagram"
   },
   "Museum": {
     "loading": "Hanging the exhibition…",
@@ -211,5 +209,13 @@
       "institution": "Institutions",
       "platform": "Platform"
     }
+  },
+  "Latest": {
+    "empty": "The first lesson is being written.",
+    "meanwhile": "Meanwhile, on Instagram",
+    "video": "Has a video",
+    "min": "min read",
+    "all": "All curations",
+    "watch": "Watch on Instagram"
   }
 }

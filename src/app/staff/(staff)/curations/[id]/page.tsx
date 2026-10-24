@@ -7,7 +7,7 @@ import { readingMinutes } from '@/lib/supabase';
 import { Upload } from '@/components/staff/Upload';
 import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass, slugify } from '@/components/staff/ui';
 
-const BLANK = { title: '', slug: '', excerpt: '', content: '', image_url: '', language: 'both', published: false };
+const BLANK = { title: '', slug: '', excerpt: '', content: '', image_url: '', video_url: '', language: 'both', published: false };
 
 export default function CurationEditor({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -37,6 +37,7 @@ export default function CurationEditor({ params }: { params: Promise<{ id: strin
             excerpt: data.excerpt ?? '',
             content: data.content,
             image_url: data.image_url ?? '',
+            video_url: data.video_url ?? '',
             language: data.language ?? 'both',
             published: !!data.published,
           });
@@ -48,7 +49,7 @@ export default function CurationEditor({ params }: { params: Promise<{ id: strin
 
   const save = useCallback(
     async (overrides: Partial<typeof BLANK> = {}) => {
-      const payload = { ...form, ...overrides, excerpt: form.excerpt || null, image_url: form.image_url || null, updated_at: new Date().toISOString() };
+      const payload = { ...form, ...overrides, excerpt: form.excerpt || null, image_url: form.image_url || null, video_url: form.video_url || null, updated_at: new Date().toISOString() };
       if (!payload.title || !payload.slug || !payload.content) {
         setError('A curation needs a title, a slug and some content.');
         return;
@@ -123,7 +124,7 @@ export default function CurationEditor({ params }: { params: Promise<{ id: strin
                   set('title', e.target.value);
                   if (!slugTouched) set('slug', slugify(e.target.value));
                 }}
-                className={`${inputClass} font-display !text-3xl`}
+                className={`${inputClass} font-display !text-2xl md:!text-3xl`}
               />
             )}
           </Field>
@@ -195,6 +196,9 @@ export default function CurationEditor({ params }: { params: Promise<{ id: strin
                 <option value="ar">Arabic site</option>
               </select>
             )}
+          </Field>
+          <Field label="Instagram / video link" hint="Optional. Paste a reel or post link — the page shows a “Watch” button.">
+            {(fid) => <input id={fid} type="url" placeholder="https://www.instagram.com/reel/…" value={form.video_url} onChange={(e) => set('video_url', e.target.value)} className={inputClass} />}
           </Field>
           <div className="flex flex-col gap-1.5">
             <span className="font-mono text-[11px] uppercase text-ink/70">Cover image</span>

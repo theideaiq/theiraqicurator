@@ -12,6 +12,7 @@ type Curation = {
   excerpt: string | null;
   content: string;
   image_url: string | null;
+  video_url: string | null;
   created_at: string;
 };
 
@@ -88,9 +89,16 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
           </p>
           <h1 dir="auto" className="mt-4 font-display text-5xl md:text-8xl leading-[0.9]">{post.title}</h1>
           {post.excerpt && <p dir="auto" className="mt-6 max-w-2xl text-xl md:text-2xl leading-snug text-ink/70 italic font-display">{post.excerpt}</p>}
-          <button type="button" onClick={share} className="mt-8 px-4 py-2 border-2 border-ink rounded-full font-mono text-xs uppercase hover:bg-saffron">
-            {copied ? t('copied') : t('share')} ↗
-          </button>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {post.video_url && (
+              <a href={post.video_url} target="_blank" rel="noreferrer" className="px-4 py-2 bg-ink text-paper rounded-full font-mono text-xs uppercase hover:bg-lapis">
+                ▶ {t('watch')}
+              </a>
+            )}
+            <button type="button" onClick={share} className="px-4 py-2 border-2 border-ink rounded-full font-mono text-xs uppercase hover:bg-saffron">
+              {copied ? t('copied') : t('share')} ↗
+            </button>
+          </div>
         </header>
 
         {post.image_url && (

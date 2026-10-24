@@ -68,12 +68,16 @@ export function Toggle({ checked, onChange, label }: { checked: boolean; onChang
 
 export function PageTitle({ kicker, title, children }: { kicker: string; title: string; children?: React.ReactNode }) {
   return (
-    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-      <div>
+    // `contents` lets the action bar stick for the whole page, not just this header
+    <div className="contents">
+      <div className={children ? 'mb-4' : 'mb-10'}>
         <p className="font-mono text-xs uppercase text-brick">{kicker}</p>
         <h1 className="font-display italic text-5xl md:text-7xl leading-[0.9]">{title}</h1>
       </div>
-      {children && <div className="flex flex-wrap gap-2">{children}</div>}
+      {/* actions stay reachable while scrolling long forms */}
+      {children && (
+        <div className="sticky top-14 lg:top-0 z-20 -mx-4 px-4 md:-mx-10 md:px-10 py-3 mb-8 bg-paper/95 backdrop-blur-sm border-b-2 border-ink/10 flex flex-wrap gap-2">{children}</div>
+      )}
     </div>
   );
 }
