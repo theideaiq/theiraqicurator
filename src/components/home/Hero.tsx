@@ -71,7 +71,6 @@ export function Hero() {
       {/* top meta row */}
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase text-ink/70">
         <span className="px-2 py-0.5 bg-ink text-paper">{t('kicker')}</span>
-        <span>33.3152°N 44.3661°E</span>
         <span className="hidden sm:inline">{t('drag_hint')}</span>
       </div>
 

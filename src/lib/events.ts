@@ -21,7 +21,7 @@ export function rowToSession(row: Tables<'events'>): ClassSession {
 }
 
 /**
- * The timetable lives in Supabase (`events`) and is edited from /admin.
+ * The timetable lives in Supabase (`events`) and is edited from /staff.
  * Until that table has rows, the built-in list keeps the page populated.
  */
 export function useSessions() {

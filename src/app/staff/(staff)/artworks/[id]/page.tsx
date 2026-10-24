@@ -3,8 +3,8 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Upload } from '@/components/admin/Upload';
-import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass } from '@/components/admin/ui';
+import { Upload } from '@/components/staff/Upload';
+import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass } from '@/components/staff/ui';
 
 type Form = {
   title: string;
@@ -95,13 +95,13 @@ export default function ArtworkEditor({ params }: { params: Promise<{ id: string
     const { error } = isNew ? await supabase.from('artworks').insert(payload) : await supabase.from('artworks').update(payload).eq('id', id);
     setSaving(false);
     if (error) setError(error.message);
-    else router.push('/admin/artworks');
+    else router.push('/staff/artworks');
   };
 
   const remove = async () => {
     if (!confirm('Take this work off the wall for good?')) return;
     await createClient().from('artworks').delete().eq('id', id);
-    router.replace('/admin/artworks');
+    router.replace('/staff/artworks');
   };
 
   if (loading) return <p className="font-mono text-xs uppercase">Fetching the ladder…</p>;
@@ -109,7 +109,7 @@ export default function ArtworkEditor({ params }: { params: Promise<{ id: string
   return (
     <form onSubmit={save}>
       <PageTitle kicker={isNew ? 'New acquisition' : 'Wall label'} title={form.title || 'Untitled'}>
-        <Button type="button" variant="ghost" onClick={() => router.push('/admin/artworks')}>
+        <Button type="button" variant="ghost" onClick={() => router.push('/staff/artworks')}>
           Cancel
         </Button>
         <Button type="submit" disabled={saving}>

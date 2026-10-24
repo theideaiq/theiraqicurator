@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" dir="ltr" className={fontVariables} suppressHydrationWarning>
+    <html lang="en" dir="ltr" className={`${fontVariables} staff-root`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

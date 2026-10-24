@@ -4,8 +4,8 @@ import { use, useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { readingMinutes } from '@/lib/supabase';
-import { Upload } from '@/components/admin/Upload';
-import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass, slugify } from '@/components/admin/ui';
+import { Upload } from '@/components/staff/Upload';
+import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass, slugify } from '@/components/staff/ui';
 
 const BLANK = { title: '', slug: '', excerpt: '', content: '', image_url: '', language: 'both', published: false };
 
@@ -66,7 +66,7 @@ export default function CurationEditor({ params }: { params: Promise<{ id: strin
       }
       setForm((f) => ({ ...f, ...overrides }));
       setSavedAt(new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }));
-      if (isNew && data) router.replace(`/admin/curations/${data.id}`);
+      if (isNew && data) router.replace(`/staff/curations/${data.id}`);
     },
     [form, id, isNew, router]
   );
@@ -86,7 +86,7 @@ export default function CurationEditor({ params }: { params: Promise<{ id: strin
   const remove = async () => {
     if (!confirm('Delete this curation for good?')) return;
     await createClient().from('curations').delete().eq('id', id);
-    router.replace('/admin/curations');
+    router.replace('/staff/curations');
   };
 
   if (loading) return <p className="font-mono text-xs uppercase">Opening the notebook…</p>;

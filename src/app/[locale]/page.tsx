@@ -47,7 +47,7 @@ export default async function Home() {
         <PopQuiz />
       </section>
 
-      <section className="px-4 md:px-8 py-24 md:py-32 bg-ink text-paper">
+      <section className="px-4 md:px-8 py-24 md:py-32 bg-coal text-chalk">
         <SectionHeading index="04" title={t('seal')} sub={t('seal_sub')} tone="paper" />
         <SealMaker />
       </section>

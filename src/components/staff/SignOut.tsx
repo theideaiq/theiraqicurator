@@ -10,7 +10,7 @@ export function SignOut({ className = '' }: { className?: string }) {
       type="button"
       onClick={async () => {
         await createClient().auth.signOut();
-        router.replace('/admin/login');
+        router.replace('/staff/login');
         router.refresh();
       }}
       className={className}

@@ -3,7 +3,7 @@
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Button, ErrorNote, Field, PageTitle, inputClass } from '@/components/admin/ui';
+import { Button, ErrorNote, Field, PageTitle, inputClass } from '@/components/staff/ui';
 
 function PasswordForm() {
   const fromReset = useSearchParams().get('reset') === '1';

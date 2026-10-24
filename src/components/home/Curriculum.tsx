@@ -9,14 +9,15 @@ const SUBJECTS = [
   { href: '/blog', key: 'blog', color: 'bg-rose', tilt: 2, glyph: '✎' },
   { href: '/syllabus', key: 'syllabus', color: 'bg-teal text-paper', tilt: -1.5, glyph: '☰' },
   { href: '/timetable', key: 'timetable', color: 'bg-saffron', tilt: 3, glyph: '◷' },
+  { href: '/manifesto', key: 'manifesto', color: 'bg-brick text-paper', tilt: -2, glyph: '✺' },
 ] as const;
 
-/** Four exercise-book covers, each a door into a section of the site. */
+/** Five exercise-book covers, each a door into a section of the site. */
 export function Curriculum() {
   const t = useTranslations('Curriculum');
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-6">
       {SUBJECTS.map((s, i) => (
         <motion.div
           key={s.key}

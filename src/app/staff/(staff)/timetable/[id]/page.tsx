@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass, slugify } from '@/components/admin/ui';
+import { Button, ErrorNote, Field, PageTitle, Toggle, inputClass, slugify } from '@/components/staff/ui';
 
 const KINDS = ['exhibition', 'workshop', 'talk', 'screening'] as const;
 const COLORS = [
@@ -117,13 +117,13 @@ export default function EventEditor({ params }: { params: Promise<{ id: string }
     const { error } = isNew ? await supabase.from('events').insert(payload) : await supabase.from('events').update(payload).eq('id', id);
     setSaving(false);
     if (error) setError(error.code === '23505' ? 'That slug is already used by another session.' : error.message);
-    else router.push('/admin/timetable');
+    else router.push('/staff/timetable');
   };
 
   const remove = async () => {
     if (!confirm('Delete this session from the timetable?')) return;
     await createClient().from('events').delete().eq('id', id);
-    router.replace('/admin/timetable');
+    router.replace('/staff/timetable');
   };
 
   if (loading) return <p className="font-mono text-xs uppercase">Finding the chalk…</p>;
@@ -160,7 +160,7 @@ export default function EventEditor({ params }: { params: Promise<{ id: string }
   return (
     <form onSubmit={save}>
       <PageTitle kicker={isNew ? 'New session' : 'Edit session'} title={form.title_en || 'Untitled'}>
-        <Button type="button" variant="ghost" onClick={() => router.push('/admin/timetable')}>
+        <Button type="button" variant="ghost" onClick={() => router.push('/staff/timetable')}>
           Cancel
         </Button>
         <Button type="submit" disabled={saving}>

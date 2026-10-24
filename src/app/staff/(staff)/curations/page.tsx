@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import type { Tables } from '@/lib/supabase/types';
-import { Empty, ErrorNote, PageTitle, Pill, Toggle, formatDate, inputClass } from '@/components/admin/ui';
+import { Empty, ErrorNote, PageTitle, Pill, Toggle, formatDate, inputClass } from '@/components/staff/ui';
 
 type Curation = Tables<'curations'>;
 
@@ -50,7 +50,7 @@ export default function CurationsList() {
   return (
     <div>
       <PageTitle kicker="Lessons" title="Curations">
-        <Link href="/admin/curations/new" className="px-4 py-2.5 rounded-full bg-ink text-paper font-mono text-xs uppercase hover:bg-lapis">
+        <Link href="/staff/curations/new" className="px-4 py-2.5 rounded-full bg-ink text-paper font-mono text-xs uppercase hover:bg-lapis">
           + New curation
         </Link>
       </PageTitle>
@@ -63,7 +63,7 @@ export default function CurationsList() {
       <ul className="border-t-2 border-ink">
         {filtered.map((row) => (
           <li key={row.id} className="border-b-2 border-ink py-4 grid grid-cols-[1fr_auto] md:grid-cols-[1fr_auto_auto] gap-4 items-center">
-            <Link href={`/admin/curations/${row.id}`} className="min-w-0 group">
+            <Link href={`/staff/curations/${row.id}`} className="min-w-0 group">
               <div className="flex flex-wrap gap-2 mb-1">
                 <Pill tone={row.published ? 'live' : 'draft'}>{row.published ? 'Live' : 'Draft'}</Pill>
                 <Pill tone="muted">{row.language}</Pill>
@@ -79,7 +79,7 @@ export default function CurationsList() {
               <Toggle checked={!!row.published} onChange={(v) => setPublished(row, v)} label="Live" />
             </div>
             <div className="flex gap-2">
-              <Link href={`/admin/curations/${row.id}`} className="p-2 border-2 border-ink rounded-full hover:bg-saffron" aria-label="Edit">
+              <Link href={`/staff/curations/${row.id}`} className="p-2 border-2 border-ink rounded-full hover:bg-saffron" aria-label="Edit">
                 <Pencil size={16} />
               </Link>
               <button type="button" onClick={() => remove(row)} className="p-2 border-2 border-brick text-brick rounded-full hover:bg-brick hover:text-paper" aria-label="Delete">

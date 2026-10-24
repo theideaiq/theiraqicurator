@@ -74,7 +74,7 @@ export function Timetable({ filterable = false, limit }: { filterable?: boolean;
         </div>
       )}
 
-      <ol className="border-t-2 border-ink">
+      <ol className="flex flex-col gap-6 pe-1.5 pb-1.5">
         <AnimatePresence initial={false} mode="popLayout">
           {sessions.map(({ session, status }, i) => {
             const date = session.startsAt ? dateParts(session.startsAt) : null;
@@ -88,7 +88,7 @@ export function Timetable({ filterable = false, limit }: { filterable?: boolean;
                 exit={{ opacity: 0, x: -40 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ delay: i * 0.06 }}
-                className="group grid grid-cols-[5.5rem_1fr] md:grid-cols-[9rem_1fr_auto] border-b-2 border-ink"
+                className="group grid grid-cols-[5.5rem_1fr] md:grid-cols-[9rem_1fr_auto] border-2 border-ink bg-paper hard-shadow overflow-hidden transition-transform hover:-translate-y-0.5"
               >
                 <div className={`${COLOR[session.color]} border-e-2 border-ink flex flex-col items-center justify-center py-6 text-center`}>
                   {date ? (

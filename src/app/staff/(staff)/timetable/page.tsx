@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import { sessionStatus } from '@/lib/content';
 import { rowToSession } from '@/lib/events';
 import type { Tables } from '@/lib/supabase/types';
-import { Empty, ErrorNote, PageTitle, Pill, formatDate } from '@/components/admin/ui';
+import { Empty, ErrorNote, PageTitle, Pill, formatDate } from '@/components/staff/ui';
 
 const SWATCH: Record<string, string> = { rose: 'bg-rose', saffron: 'bg-saffron', teal: 'bg-teal', lapis: 'bg-lapis', brick: 'bg-brick' };
 
@@ -28,7 +28,7 @@ export default function TimetableList() {
   return (
     <div>
       <PageTitle kicker="Exhibitions · workshops · talks" title="Timetable">
-        <Link href="/admin/timetable/new" className="px-4 py-2.5 rounded-full bg-ink text-paper font-mono text-xs uppercase hover:bg-lapis">
+        <Link href="/staff/timetable/new" className="px-4 py-2.5 rounded-full bg-ink text-paper font-mono text-xs uppercase hover:bg-lapis">
           + New session
         </Link>
       </PageTitle>
@@ -40,7 +40,7 @@ export default function TimetableList() {
           const status = sessionStatus(rowToSession(row));
           return (
             <li key={row.id}>
-              <Link href={`/admin/timetable/${row.id}`} className="group grid grid-cols-[1rem_1fr] gap-4 border-b-2 border-ink py-4 items-center">
+              <Link href={`/staff/timetable/${row.id}`} className="group grid grid-cols-[1rem_1fr] gap-4 border-b-2 border-ink py-4 items-center">
                 <span className={`w-4 h-full min-h-12 border-2 border-ink ${SWATCH[row.color] ?? 'bg-paper'}`} />
                 <span className="min-w-0">
                   <span className="flex flex-wrap gap-2 mb-1">

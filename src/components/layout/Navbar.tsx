@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Link, usePathname } from '@/i18n/routing';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { BaghdadClock } from './BaghdadClock';
 import { ThemeToggle } from './ThemeToggle';
 import { Logo } from '@/components/Logo';
 
@@ -70,9 +69,6 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-3">
-            <span className="hidden md:inline">
-              <BaghdadClock label={t('baghdad')} locale={locale} />
-            </span>
             <ThemeToggle labels={{ day: t('day'), night: t('night') }} />
             <Link
               href={pathname}
@@ -106,8 +102,7 @@ export function Navbar() {
             transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-[70] bg-lapis text-paper flex flex-col px-6 pt-5 pb-10"
           >
-            <div className="flex items-center justify-between">
-              <BaghdadClock label={t('baghdad')} locale={locale} />
+            <div className="flex items-center justify-end">
               <button
                 type="button"
                 onClick={() => setOpen(false)}

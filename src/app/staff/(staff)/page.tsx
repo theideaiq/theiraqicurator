@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client';
 import { sessionStatus } from '@/lib/content';
 import { rowToSession } from '@/lib/events';
 import type { Tables } from '@/lib/supabase/types';
-import { Pill, formatDate } from '@/components/admin/ui';
+import { Pill, formatDate } from '@/components/staff/ui';
 
 type Stats = {
   published: number;
@@ -49,11 +49,11 @@ export default function Overview() {
   }, []);
 
   const tiles = [
-    { label: 'Published curations', value: stats?.published, href: '/admin/curations', tone: 'bg-rose' },
-    { label: 'Drafts', value: stats?.drafts, href: '/admin/curations', tone: 'bg-paper' },
-    { label: 'Works in the museum', value: stats?.artworks, href: '/admin/artworks', tone: 'bg-lapis text-paper' },
-    { label: 'Upcoming sessions', value: stats?.upcoming, href: '/admin/timetable', tone: 'bg-saffron' },
-    { label: 'Unread notes', value: stats?.unread, href: '/admin/inbox', tone: 'bg-teal text-paper' },
+    { label: 'Published curations', value: stats?.published, href: '/staff/curations', tone: 'bg-rose' },
+    { label: 'Drafts', value: stats?.drafts, href: '/staff/curations', tone: 'bg-paper' },
+    { label: 'Works in the museum', value: stats?.artworks, href: '/staff/artworks', tone: 'bg-lapis text-paper' },
+    { label: 'Upcoming sessions', value: stats?.upcoming, href: '/staff/timetable', tone: 'bg-saffron' },
+    { label: 'Unread notes', value: stats?.unread, href: '/staff/inbox', tone: 'bg-teal text-paper' },
   ];
 
   return (
@@ -80,7 +80,7 @@ export default function Overview() {
         <section>
           <div className="flex items-baseline justify-between mb-4">
             <h2 className="font-display italic text-3xl">Latest notes</h2>
-            <Link href="/admin/inbox" className="font-mono text-xs uppercase underline underline-offset-4">
+            <Link href="/staff/inbox" className="font-mono text-xs uppercase underline underline-offset-4">
               Inbox →
             </Link>
           </div>
@@ -104,13 +104,13 @@ export default function Overview() {
         <section>
           <h2 className="font-display italic text-3xl mb-4">Quick chalk</h2>
           <div className="flex flex-col gap-3">
-            <Link href="/admin/curations/new" className="px-4 py-3 border-2 border-ink bg-paper hover:bg-saffron font-mono text-xs uppercase">
+            <Link href="/staff/curations/new" className="px-4 py-3 border-2 border-ink bg-paper hover:bg-saffron font-mono text-xs uppercase">
               + Write a curation
             </Link>
-            <Link href="/admin/artworks/new" className="px-4 py-3 border-2 border-ink bg-paper hover:bg-saffron font-mono text-xs uppercase">
+            <Link href="/staff/artworks/new" className="px-4 py-3 border-2 border-ink bg-paper hover:bg-saffron font-mono text-xs uppercase">
               + Hang an artwork
             </Link>
-            <Link href="/admin/timetable/new" className="px-4 py-3 border-2 border-ink bg-paper hover:bg-saffron font-mono text-xs uppercase">
+            <Link href="/staff/timetable/new" className="px-4 py-3 border-2 border-ink bg-paper hover:bg-saffron font-mono text-xs uppercase">
               + Schedule a session
             </Link>
           </div>

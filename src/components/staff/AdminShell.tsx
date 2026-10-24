@@ -6,16 +6,15 @@ import { useState } from 'react';
 import { BookOpen, CalendarDays, Frame, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, X } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
-import { BaghdadClock } from '@/components/layout/BaghdadClock';
 import { SignOut } from './SignOut';
 
 const NAV = [
-  { href: '/admin', label: 'Overview', icon: LayoutGrid, exact: true },
-  { href: '/admin/curations', label: 'Curations', icon: BookOpen },
-  { href: '/admin/artworks', label: 'Museum', icon: Frame },
-  { href: '/admin/timetable', label: 'Timetable', icon: CalendarDays },
-  { href: '/admin/partners', label: 'Partners', icon: Handshake },
-  { href: '/admin/inbox', label: 'Inbox', icon: Inbox },
+  { href: '/staff', label: 'Overview', icon: LayoutGrid, exact: true },
+  { href: '/staff/curations', label: 'Curations', icon: BookOpen },
+  { href: '/staff/artworks', label: 'Museum', icon: Frame },
+  { href: '/staff/timetable', label: 'Timetable', icon: CalendarDays },
+  { href: '/staff/partners', label: 'Partners', icon: Handshake },
+  { href: '/staff/inbox', label: 'Inbox', icon: Inbox },
 ];
 
 export function AdminShell({ email, migrated, children }: { email: string; migrated: boolean; children: React.ReactNode }) {
@@ -57,10 +56,10 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
         <ThemeToggle labels={{ day: 'Day mode', night: 'Night mode' }} />
         <SignOut className="font-mono text-xs uppercase underline underline-offset-4 hover:text-brick" />
       </div>
-      <Link href="/admin/account" className="font-mono text-[10px] uppercase text-ink/50 break-all hover:text-lapis">
+      <Link href="/staff/account" className="font-mono text-[10px] uppercase text-ink/50 break-all hover:text-lapis">
         {email} · password
       </Link>
-      <p className="font-mono text-[10px] uppercase text-ink/40">Platform by The IDEA</p>
+      <p className="font-mono text-[10px] uppercase text-ink/40">Built &amp; hosted by The IDEA</p>
     </div>
   );
 
@@ -68,7 +67,7 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
     <div className="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">
       {/* desktop sidebar */}
       <aside className="hidden lg:flex flex-col sticky top-0 h-screen border-e-2 border-ink bg-paper-2 p-5">
-        <Link href="/admin" className="flex items-center gap-3 mb-10">
+        <Link href="/staff" className="flex items-center gap-3 mb-10">
           <Logo className="w-11" />
           <span className="leading-none">
             <span className="block font-display italic text-2xl">Staff Room</span>
@@ -83,7 +82,7 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
 
       {/* mobile bar */}
       <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between border-b-2 border-ink bg-paper px-4 h-14">
-        <Link href="/admin" className="flex items-center gap-2">
+        <Link href="/staff" className="flex items-center gap-2">
           <Logo className="w-8" />
           <span className="font-display italic text-xl">Staff Room</span>
         </Link>
@@ -99,9 +98,6 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
       )}
 
       <main className="min-w-0 px-4 md:px-10 py-8 md:py-12">
-        <div className="flex justify-end mb-6">
-          <BaghdadClock label="BGD" locale="en" />
-        </div>
         {!migrated && (
           <div className="mb-8 border-2 border-ink bg-saffron p-4 text-sm">
             <strong className="font-mono uppercase text-xs">Setup needed:</strong> run{' '}

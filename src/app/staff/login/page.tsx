@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { createClient } from '@/lib/supabase/client';
 import { Logo } from '@/components/Logo';
-import { Button, ErrorNote, Field, inputClass } from '@/components/admin/ui';
+import { Button, ErrorNote, Field, inputClass } from '@/components/staff/ui';
 
 // Supabase puts implicit-flow results in the URL hash. Grab it once, as the
 // module loads, before the effect below clears it from the address bar.
@@ -17,7 +17,7 @@ const noop = () => () => {};
 function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const next = params.get('next')?.startsWith('/admin') ? params.get('next')! : '/admin';
+  const next = params.get('next')?.startsWith('/staff') ? params.get('next')! : '/staff';
   const [mode, setMode] = useState<'password' | 'link' | 'reset'>('password');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +40,7 @@ function LoginForm() {
         .then(({ error }) => {
           if (error) setError(error.message);
           else {
-            router.replace(hash.get('type') === 'recovery' ? '/admin/account?reset=1' : next);
+            router.replace(hash.get('type') === 'recovery' ? '/staff/account?reset=1' : next);
             router.refresh();
           }
         });
@@ -69,7 +69,7 @@ function LoginForm() {
       router.refresh();
     } else if (mode === 'reset') {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/admin/auth/callback?next=/admin/account`,
+        redirectTo: `${window.location.origin}/staff/auth/callback?next=/staff/account`,
       });
       if (error) setError(error.message);
       else setLinkSent(true);
@@ -79,7 +79,7 @@ function LoginForm() {
         email,
         options: {
           shouldCreateUser: false,
-          emailRedirectTo: `${window.location.origin}/admin/auth/callback?next=${encodeURIComponent(next)}`,
+          emailRedirectTo: `${window.location.origin}/staff/auth/callback?next=${encodeURIComponent(next)}`,
         },
       });
       if (error) setError(error.message);

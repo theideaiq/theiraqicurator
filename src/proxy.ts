@@ -9,18 +9,18 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // The staff room lives outside the localised site and needs a session.
-  if (pathname.startsWith('/admin')) {
+  if (pathname.startsWith('/staff')) {
     const { response, user } = await updateSession(request, NextResponse.next({ request }));
-    const isPublic = pathname.startsWith('/admin/login') || pathname.startsWith('/admin/auth');
+    const isPublic = pathname.startsWith('/staff/login') || pathname.startsWith('/staff/auth');
     if (!user && !isPublic) {
       const url = request.nextUrl.clone();
-      url.pathname = '/admin/login';
+      url.pathname = '/staff/login';
       url.searchParams.set('next', pathname);
       return NextResponse.redirect(url);
     }
-    if (user && pathname.startsWith('/admin/login')) {
+    if (user && pathname.startsWith('/staff/login')) {
       const url = request.nextUrl.clone();
-      url.pathname = '/admin';
+      url.pathname = '/staff';
       url.search = '';
       return NextResponse.redirect(url);
     }

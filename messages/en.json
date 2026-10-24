@@ -10,7 +10,6 @@
     "syllabus": "Syllabus",
     "menu": "Menu",
     "close": "Close",
-    "baghdad": "BGD",
     "switch_lang": "عربي",
     "skip": "Skip to content",
     "day": "Day class",
@@ -37,7 +36,7 @@
     "timetable": "Timetable",
     "timetable_sub": "Exhibitions, workshops and talks. Attendance optional, curiosity mandatory.",
     "curriculum": "Curriculum",
-    "curriculum_sub": "Four subjects. Pick any. There is no exam.",
+    "curriculum_sub": "Five subjects. Pick any. There is no exam.",
     "quiz": "Pop quiz",
     "quiz_sub": "Close your books. Six questions on the art history you were never taught.",
     "seal": "The Seal Room",
@@ -78,7 +77,9 @@
     "syllabus_note": "Fifteen Iraqi artists your textbook skipped.",
     "timetable": "Timetable",
     "timetable_note": "Exhibitions & workshops, with calendar invites.",
-    "subject": "Subject"
+    "subject": "Subject",
+    "manifesto": "Manifesto",
+    "manifesto_note": "House rules for a classroom with no walls."
   },
   "Quiz": {
     "question": "Question",
@@ -173,12 +174,11 @@
     "about": "The Iraqi Curator is a bilingual, Baghdad-made initiative documenting contemporary Iraqi art, culture and thought — through exhibitions, workshops, essays and a digital museum.",
     "contact": "Write to us",
     "follow": "Follow",
-    "built": "Built with The IDEA Group",
     "rights": "All rights reserved.",
     "top": "Back to top ↑",
     "location": "Baghdad, Iraq",
     "staff": "Staff room",
-    "partner": "A platform by The IDEA"
+    "partner": "Built & hosted by The IDEA"
   },
   "NotFound": {
     "title": "The tape fell off.",
@@ -195,7 +195,7 @@
     "colophon": "Colophon",
     "colophon_body": "Set in Instrument Serif, Space Grotesk, Space Mono, Lalezar and IBM Plex Sans Arabic, with a little Noto Sans Cuneiform for the seals. Photocopied, taped and built in Baghdad.",
     "platform": "Platform",
-    "platform_body": "Designed, built and run in partnership with The IDEA — Baghdad.",
+    "platform_body": "Built and hosted by The IDEA, our technology partner in Baghdad.",
     "signed": "Signed, the class of ∞",
     "sign": "Sign it — pass us a note"
   },

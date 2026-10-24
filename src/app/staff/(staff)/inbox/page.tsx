@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Mail, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import type { Tables } from '@/lib/supabase/types';
-import { Empty, ErrorNote, PageTitle, Pill, formatDate } from '@/components/admin/ui';
+import { Empty, ErrorNote, PageTitle, Pill, formatDate } from '@/components/staff/ui';
 
 type Note = Tables<'notes'>;
 

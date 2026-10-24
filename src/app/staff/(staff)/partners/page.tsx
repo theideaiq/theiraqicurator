@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ArrowDown, ArrowUp, Pencil, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import type { Tables } from '@/lib/supabase/types';
-import { Button, Empty, ErrorNote, Field, PageTitle, Pill, Toggle, inputClass } from '@/components/admin/ui';
+import { Button, Empty, ErrorNote, Field, PageTitle, Pill, Toggle, inputClass } from '@/components/staff/ui';
 
 type Row = Tables<'partners'>;
 type Form = Pick<Row, 'name_en' | 'name_ar' | 'kind' | 'note_en' | 'note_ar' | 'published'> & { url: string };

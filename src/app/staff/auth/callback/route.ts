@@ -11,10 +11,10 @@ import { createClient } from '@/lib/supabase/server';
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = request.nextUrl;
   const next = searchParams.get('next');
-  const destination = next && next.startsWith('/admin') ? next : '/admin';
+  const destination = next && next.startsWith('/staff') ? next : '/staff';
 
   const fail = (reason: string) => {
-    const url = new URL('/admin/login', origin);
+    const url = new URL('/staff/login', origin);
     url.searchParams.set('error', reason);
     return NextResponse.redirect(url);
   };
@@ -45,5 +45,5 @@ export async function GET(request: NextRequest) {
   }
 
   // A password-reset link lands on the account page so a new password can be set.
-  return NextResponse.redirect(new URL(type === 'recovery' ? '/admin/account?reset=1' : destination, origin));
+  return NextResponse.redirect(new URL(type === 'recovery' ? '/staff/account?reset=1' : destination, origin));
 }
