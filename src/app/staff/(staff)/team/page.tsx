@@ -6,8 +6,8 @@ import { Button, Empty, ErrorNote, Field, PageTitle, Pill, formatDate, inputClas
 import { addMember, listMembers, removeMember, resendInvite, updateMember, type Member, type Role } from './actions';
 
 const ROLES: { value: Role; label: string; note: string }[] = [
-  { value: 'editor', label: 'Editor', note: 'Manages all content: curations, museum, timetable, syllabus, quiz, manifesto, partners, inbox.' },
-  { value: 'superadmin', label: 'Superadmin', note: 'Everything an editor can do, plus adding and removing staff.' },
+  { value: 'editor', label: 'Ustaz · أستاذ', note: 'Runs the classes: curations, museum, timetable, syllabus, quiz, manifesto, partners, inbox.' },
+  { value: 'superadmin', label: 'Headteacher · المدير', note: 'Everything an ustaz can do, plus hiring and transferring faculty.' },
 ];
 
 const STATUS: Record<Member['status'], { tone: 'live' | 'draft' | 'muted' | 'alert'; label: string }> = {
@@ -76,7 +76,7 @@ export default function TeamPage() {
 
   return (
     <div>
-      <PageTitle kicker="Who can edit" title="Staff" />
+      <PageTitle kicker="الكادر · Who teaches here" title="Faculty" />
 
       {!canInvite && (
         <p className="mb-6 border-2 border-ink bg-saffron/40 p-4 text-sm">
@@ -93,7 +93,7 @@ export default function TeamPage() {
       )}
 
       <form onSubmit={add} className="mb-12 border-2 border-ink bg-paper-2 hard-shadow p-5 md:p-8 grid md:grid-cols-2 gap-5">
-        <h2 className="md:col-span-2 font-display italic text-3xl">Add someone</h2>
+        <h2 className="md:col-span-2 font-display italic text-3xl">Hire someone</h2>
         <Field label="Email">
           {(id) => <input id={id} type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={inputClass} />}
         </Field>
@@ -120,12 +120,12 @@ export default function TeamPage() {
             Email them an invite to set a password
           </label>
           <Button type="submit" disabled={pending}>
-            {pending ? 'Working…' : '+ Add to staff'}
+            {pending ? 'Working…' : '+ Add to the faculty'}
           </Button>
         </div>
       </form>
 
-      {members && members.length === 0 && !error && <Empty>No one on the team yet.</Empty>}
+      {members && members.length === 0 && !error && <Empty>No one on the faculty yet.</Empty>}
 
       <ul className="border-t-2 border-ink">
         {members?.map((m) => (
@@ -146,7 +146,7 @@ export default function TeamPage() {
                 aria-label={`Role for ${m.email}`}
                 value={m.role}
                 disabled={pending}
-                onChange={(e) => act(() => updateMember(m.email, { role: e.target.value as Role }), `${m.email} is now ${e.target.value === 'superadmin' ? 'a superadmin' : 'an editor'}.`)}
+                onChange={(e) => act(() => updateMember(m.email, { role: e.target.value as Role }), `${m.email} is now ${e.target.value === 'superadmin' ? 'a headteacher' : 'an ustaz'}.`)}
                 className={`${inputClass} !w-auto !py-2 font-mono !text-xs uppercase`}
               >
                 {ROLES.map((r) => (
@@ -165,12 +165,12 @@ export default function TeamPage() {
                   type="button"
                   disabled={pending}
                   onClick={() => {
-                    if (!confirm(`Remove ${m.email} from the staff room?`)) return;
-                    const deleteAccount = canInvite && confirm('Also delete their login entirely? (Cancel keeps the login but removes all staff-room access.)');
-                    act(() => removeMember(m.email, deleteAccount), `${m.email} no longer has access.`);
+                    if (!confirm(`Transfer ${m.email} to another school? They lose access to the Teachers’ Lounge.`)) return;
+                    const deleteAccount = canInvite && confirm('Also delete their login entirely? (Cancel keeps the login but removes all access to the lounge.)');
+                    act(() => removeMember(m.email, deleteAccount), `${m.email} has been transferred to another school.`);
                   }}
                   className="p-2 border-2 border-brick text-brick rounded-full hover:bg-brick hover:text-paper disabled:opacity-40"
-                  aria-label={`Remove ${m.email}`}
+                  aria-label={`Transfer ${m.email} to another school`}
                 >
                   <Trash2 size={16} />
                 </button>

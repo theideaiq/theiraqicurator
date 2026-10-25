@@ -129,7 +129,7 @@ function LoginForm() {
         </p>
       ) : (
         <Button type="submit" disabled={busy || !configured} className="py-3.5">
-          {busy ? 'One sec…' : mode === 'password' ? 'Enter the staff room →' : mode === 'reset' ? 'Send reset link →' : 'Send sign-in link →'}
+          {busy ? 'One sec…' : mode === 'password' ? 'Enter the lounge →' : mode === 'reset' ? 'Send reset link →' : 'Send sign-in link →'}
         </Button>
       )}
       {mode === 'password' && (
@@ -150,14 +150,14 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen paper-lines grid lg:grid-cols-2">
       <section className="hidden lg:flex flex-col justify-between bg-lapis text-paper p-12 border-e-2 border-ink overflow-hidden relative">
-        <p className="font-mono text-xs uppercase">The Iraqi Curator · Staff only</p>
+        <p className="font-mono text-xs uppercase">The Iraqi Curator · Teachers only beyond this door</p>
         <h1 className="font-display italic text-[8vw] leading-[0.85]">
           Teachers&rsquo;
           <br />
           lounge.
         </h1>
         <p className="font-arabic text-4xl" dir="rtl" lang="ar">
-          غرفة المدرسين
+          استراحة المدرسين
         </p>
         <motion.div
           initial={{ rotate: -40, scale: 0.6, opacity: 0 }}
@@ -172,7 +172,7 @@ export default function LoginPage() {
       <section className="flex items-center justify-center p-6 pl-[5.5rem] lg:pl-24">
         <div className="w-full max-w-sm">
           <Logo className="w-16 mb-6 lg:hidden" />
-          <p className="font-mono text-xs uppercase text-brick">Staff room</p>
+          <p className="font-mono text-xs uppercase text-brick">Teachers&rsquo; lounge</p>
           <h2 className="font-display italic text-5xl leading-none mt-1 mb-8">Sign in.</h2>
           <Suspense>
             <LoginForm />

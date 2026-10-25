@@ -29,7 +29,7 @@ async function requireSuperadmin() {
   } = await supabase.auth.getUser();
   if (!user?.email) throw new Error('Sign in first.');
   const { data: ok, error } = await supabase.rpc('is_superadmin');
-  if (error || !ok) throw new Error('Only superadmins can manage the team.');
+  if (error || !ok) throw new Error('Only the headteacher can manage the faculty.');
   return { supabase, email: user.email.toLowerCase() };
 }
 
@@ -134,7 +134,7 @@ export async function updateMember(email: string, changes: { name?: string; role
     if (changes.role === 'editor') {
       const { data: current } = await supabase.from('staff').select('role').eq('email', target).single();
       if (current?.role === 'superadmin' && (await superadminCount(supabase)) <= 1) {
-        throw new Error('There must always be at least one superadmin.');
+        throw new Error('The school needs at least one headteacher.');
       }
     }
     const patch: { name?: string | null; role?: Role } = {};
@@ -150,10 +150,10 @@ export async function removeMember(email: string, deleteAccount: boolean): Promi
   return run(async () => {
     const { supabase, email: me } = await requireSuperadmin();
     const target = email.toLowerCase();
-    if (target === me) throw new Error('You can’t remove yourself — ask another superadmin.');
+    if (target === me) throw new Error('You can’t transfer yourself — ask another headteacher.');
     const { data: current } = await supabase.from('staff').select('role').eq('email', target).single();
     if (current?.role === 'superadmin' && (await superadminCount(supabase)) <= 1) {
-      throw new Error('There must always be at least one superadmin.');
+      throw new Error('The school needs at least one headteacher.');
     }
     const { error } = await supabase.from('staff').delete().eq('email', target);
     if (error) throw new Error(error.message);

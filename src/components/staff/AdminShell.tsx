@@ -21,7 +21,7 @@ const NAV = [
   { href: '/staff/inbox', label: 'Inbox', icon: Inbox },
 ];
 
-const SUPERADMIN_NAV = [{ href: '/staff/team', label: 'Staff', icon: Users }];
+const SUPERADMIN_NAV = [{ href: '/staff/team', label: 'Faculty', icon: Users }];
 
 export function AdminShell({
   email,
@@ -86,9 +86,9 @@ export function AdminShell({
         <Link href="/staff" className="flex items-center gap-3 mb-10">
           <Logo className="w-11" />
           <span className="leading-none">
-            <span className="block font-display italic text-2xl">Staff Room</span>
+            <span className="block font-display italic text-2xl">Teachers&rsquo; Lounge</span>
             <span className="block font-arabic text-sm text-ink/60" dir="rtl" lang="ar">
-              غرفة المدرسين
+              استراحة المدرسين
             </span>
           </span>
         </Link>
@@ -100,7 +100,7 @@ export function AdminShell({
       <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between border-b-2 border-ink bg-paper px-4 h-14">
         <Link href="/staff" className="flex items-center gap-2">
           <Logo className="w-8" />
-          <span className="font-display italic text-xl">Staff Room</span>
+          <span className="font-display italic text-xl">Teachers&rsquo; Lounge</span>
         </Link>
         <button type="button" onClick={() => setOpen(!open)} className="p-2" aria-label="Menu" aria-expanded={open}>
           {open ? <X /> : <Menu />}
