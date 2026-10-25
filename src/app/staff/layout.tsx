@@ -4,7 +4,7 @@ import { themeScript } from '@/lib/theme';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'Staff Room — The Iraqi Curator', template: '%s — Staff Room' },
+  title: { default: 'Teachers’ Lounge — The Iraqi Curator', template: '%s — Teachers’ Lounge' },
   robots: { index: false, follow: false },
 };
 

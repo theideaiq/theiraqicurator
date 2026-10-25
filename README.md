@@ -2,7 +2,7 @@
 
 *The art class we didn't take at school / درس الفنية اللي ما اخذناه بالمدرسة*
 
-A single Next.js app: the bilingual public site **and** the staff room (`/staff`) where the
+A single Next.js app: the bilingual public site **and** the Teachers’ Lounge (`/staff`) where the
 curator manages everything. One repo, one deploy. Built and hosted by our technology partner
 [The IDEA](https://theideaiq.com).
 
@@ -16,10 +16,10 @@ curator manages everything. One repo, one deploy. Built and hosted by our techno
 | `/blog` | Curations (essays) |
 | `/syllabus` | Index of Iraqi artists |
 | `/manifesto` | House rules + colophon |
-| `/staff` | Staff room: museum, curations, syllabus, timetable, manifesto, quiz, partners, inbox |
+| `/staff` | Teachers’ Lounge: museum, curations, syllabus, timetable, manifesto, quiz, partners, inbox, faculty |
 
 Content lives in Supabase (`curations`, `artworks`, `events`, `partners`, `syllabus_artists`,
-`quiz_questions`, `manifesto_rules`, `notes`), all edited from the staff room. The syllabus, quiz and
+`quiz_questions`, `manifesto_rules`, `notes`), all edited from the Teachers’ Lounge. The syllabus, quiz and
 manifesto live in `src/lib/content.ts`; the timetable falls back to the list there until the
 `events` table has rows (partners likewise fall back to the list there).
 
@@ -43,7 +43,7 @@ The site lists **hello@theiraqicurator.org**. Set it up with Cloudflare Email Ro
 ```bash
 pnpm install
 cp .env.example .env.local   # fill in your Supabase URL + anon key
-pnpm dev                     # http://localhost:3000, staff room at /staff
+pnpm dev                     # http://localhost:3000, Teachers’ Lounge at /staff
 ```
 
 ## Supabase setup (once)
@@ -51,11 +51,9 @@ pnpm dev                     # http://localhost:3000, staff room at /staff
 1. Run `supabase/migrations/20261024000000_platform.sql` in the Supabase SQL editor. It adds
    the `events`, `partners`, `notes` and `staff` tables, row-level security, and the `museum-assets`
    storage bucket, and seeds the timetable and partners.
-2. Create a user for each staff member (Authentication → Users → Add user), then add them to
-   the allowlist:
-   ```sql
-   insert into public.staff (email, name) values ('ali@example.com', 'Ali');
-   ```
+2. The faculty is managed at **/staff/team** (headteachers only): add someone, pick
+   *Ustaz* (`editor`) or *Headteacher* (`superadmin`), and they get an email invite to set a password. This needs
+   `SUPABASE_SERVICE_ROLE_KEY` set on Vercel (server-only; never `NEXT_PUBLIC_`).
 3. Turn off public sign-ups (Authentication → Providers → Email) — only invited staff need accounts.
 4. For "email me a link" sign-in, add `https://<your-domain>/staff/auth/callback` to
    Authentication → URL Configuration → Redirect URLs.
@@ -63,4 +61,4 @@ pnpm dev                     # http://localhost:3000, staff room at /staff
 ## Deploy
 
 Vercel, from the repo root (Framework preset: Next.js, no root directory). Set
-`NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY`.

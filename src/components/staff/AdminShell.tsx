@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { BookOpen, CalendarDays, CircleHelp, Frame, GraduationCap, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, ScrollText, X } from 'lucide-react';
+import { BookOpen, CalendarDays, CircleHelp, Frame, GraduationCap, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, ScrollText, Users, X } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { SignOut } from './SignOut';
@@ -21,7 +21,19 @@ const NAV = [
   { href: '/staff/inbox', label: 'Inbox', icon: Inbox },
 ];
 
-export function AdminShell({ email, migrated, children }: { email: string; migrated: boolean; children: React.ReactNode }) {
+const SUPERADMIN_NAV = [{ href: '/staff/team', label: 'Faculty', icon: Users }];
+
+export function AdminShell({
+  email,
+  migrated,
+  superadmin,
+  children,
+}: {
+  email: string;
+  migrated: boolean;
+  superadmin: boolean;
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -36,7 +48,7 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
 
   const nav = (
     <nav className="flex flex-col gap-1">
-      {NAV.map(({ href, label, icon: Icon, exact }) => (
+      {[...NAV, ...(superadmin ? SUPERADMIN_NAV : [])].map(({ href, label, icon: Icon, exact }: (typeof NAV)[number]) => (
         <Link
           key={href}
           href={href}
@@ -74,9 +86,9 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
         <Link href="/staff" className="flex items-center gap-3 mb-10">
           <Logo className="w-11" />
           <span className="leading-none">
-            <span className="block font-display italic text-2xl">Staff Room</span>
+            <span className="block font-display italic text-2xl">Teachers&rsquo; Lounge</span>
             <span className="block font-arabic text-sm text-ink/60" dir="rtl" lang="ar">
-              غرفة المدرسين
+              استراحة المدرسين
             </span>
           </span>
         </Link>
@@ -88,7 +100,7 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
       <header className="lg:hidden sticky top-0 z-40 flex items-center justify-between border-b-2 border-ink bg-paper px-4 h-14">
         <Link href="/staff" className="flex items-center gap-2">
           <Logo className="w-8" />
-          <span className="font-display italic text-xl">Staff Room</span>
+          <span className="font-display italic text-xl">Teachers&rsquo; Lounge</span>
         </Link>
         <button type="button" onClick={() => setOpen(!open)} className="p-2" aria-label="Menu" aria-expanded={open}>
           {open ? <X /> : <Menu />}
