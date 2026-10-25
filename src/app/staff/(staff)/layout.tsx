@@ -22,8 +22,11 @@ export default async function StaffLayout({ children }: { children: React.ReactN
   const migrated = !error;
   if (migrated && !isStaff) return <NotStaff email={user.email ?? ''} />;
 
+  // Missing function (roles migration not run yet) simply means "not superadmin".
+  const { data: isSuperadmin } = await supabase.rpc('is_superadmin');
+
   return (
-    <AdminShell email={user.email ?? ''} migrated={migrated}>
+    <AdminShell email={user.email ?? ''} migrated={migrated} superadmin={!!isSuperadmin}>
       {children}
     </AdminShell>
   );

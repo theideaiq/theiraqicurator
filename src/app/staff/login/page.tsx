@@ -40,7 +40,7 @@ function LoginForm() {
         .then(({ error }) => {
           if (error) setError(error.message);
           else {
-            router.replace(hash.get('type') === 'recovery' ? '/staff/account?reset=1' : next);
+            router.replace(['recovery', 'invite'].includes(hash.get('type') ?? '') ? '/staff/account?reset=1' : next);
             router.refresh();
           }
         });

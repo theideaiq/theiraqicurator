@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { BookOpen, CalendarDays, CircleHelp, Frame, GraduationCap, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, ScrollText, X } from 'lucide-react';
+import { BookOpen, CalendarDays, CircleHelp, Frame, GraduationCap, Handshake, Inbox, LayoutGrid, ExternalLink, Menu, ScrollText, Users, X } from 'lucide-react';
 import { Logo } from '@/components/Logo';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { SignOut } from './SignOut';
@@ -21,7 +21,19 @@ const NAV = [
   { href: '/staff/inbox', label: 'Inbox', icon: Inbox },
 ];
 
-export function AdminShell({ email, migrated, children }: { email: string; migrated: boolean; children: React.ReactNode }) {
+const SUPERADMIN_NAV = [{ href: '/staff/team', label: 'Staff', icon: Users }];
+
+export function AdminShell({
+  email,
+  migrated,
+  superadmin,
+  children,
+}: {
+  email: string;
+  migrated: boolean;
+  superadmin: boolean;
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -36,7 +48,7 @@ export function AdminShell({ email, migrated, children }: { email: string; migra
 
   const nav = (
     <nav className="flex flex-col gap-1">
-      {NAV.map(({ href, label, icon: Icon, exact }) => (
+      {[...NAV, ...(superadmin ? SUPERADMIN_NAV : [])].map(({ href, label, icon: Icon, exact }: (typeof NAV)[number]) => (
         <Link
           key={href}
           href={href}
